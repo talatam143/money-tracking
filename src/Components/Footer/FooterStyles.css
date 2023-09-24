@@ -1,0 +1,52 @@
+@media (width > 820px) {
+  .mobileMenuContainer {
+    display: none !important;
+  }
+}
+
+.mobileMenuContainer {
+  margin-bottom: 56px;
+}
+
+.footerIconsContainer {
+  background-color: var(--yellow-color) !important;
+  border: solid;
+  border-color: var(--red-color) !important;
+  border-width: 1px 0 0 0;
+  border-radius: 10px 10px 0 0;
+}
+
+.filledDashboardIcon {
+  fill: var(--red-color) !important;
+  color: var(--red-color) !important;
+}
+
+.filledTransactionIcon {
+  color: var(--red-color) !important;
+}
+
+.filledAccountIcon {
+  fill: none !important;
+  color: var(--red-color) !important;
+}
+
+.filledDashboardIcon,
+.filledTransactionIcon,
+.filledAccountIcon {
+  width: 34px;
+  height: 34px;
+  transition: all 0.2s;
+}
+
+.outlinedDashboardIcon,
+.outlinedTransactionIcon,
+.outlinedAccountIcon {
+  width: 30px;
+  height: 30px;
+  color: #65665c !important;
+}
+
+.css-1bjk3jo-MuiButtonBase-root-MuiBottomNavigationAction-root.Mui-selected {
+  color: var(--red-color) !important;
+  font-weight: bold;
+}

@@ -1,13 +1,53 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  --yellow-color: #fcffe7;
+  --red-color: #eb455f;
+  --darkblue-color: #2b3467;
+  --lightblue-color: #bad7e9;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  font-family: 'Tajawal', sans-serif !important;
+  background-color: var(--yellow-color) !important;
+  margin: 0;
+}
+
+.MuiPickersLayout-root {
+  background: var(--lightblue-color) !important;
+  color: var(--red-color) !important;
+  border-radius: 10px !important;
+}
+
+.css-as40ez-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+  color: var(--yellow-color) !important;
+  background-color: var(--red-color) !important;
+}
+
+.MuiPopper-root-MuiPickersPopper-root {
+  z-index: 1300;
+}
+
+.css-71vzt-MuiPaper-root-MuiPickersPopper-paper {
+  border-radius: 10px !important;
+}
+
+.MuiFormHelperText-root {
+  color: #d32f2f !important;
+  font-size: 12px !important;
+}
+
+.MuiLinearProgress-root {
+  background-color: var(--lightblue-color) !important;
+}
+
+.MuiLinearProgress-bar {
+  background-color: var(--darkblue-color) !important;
+}
+
+.MuiPaper-root-MuiAlert-root {
+  align-items: center !important;
+}
+
+.css-4noumu-MuiPaper-root-MuiAlert-root {
+  display: flex !important;
+  align-items: center !important;
 }

@@ -1,0 +1,44 @@
+.loginCardHeadings {
+  font-family: 'Courgette', cursive !important;
+  font-weight: 700 !important;
+  font-size: 26px !important;
+}
+
+.loginCardButtons {
+  background-color: var(--red-color) !important;
+  color: var(--yellow-color) !important;
+  width: 80px !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  font-family: 'Tajawal', sans-serif !important;
+}
+
+.loginMainContainer {
+  height: 100vh;
+}
+
+.loginFormContainer,.signupFormContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 40px;
+}
+
+.loginFormAnchorTag {
+  text-decoration: none;
+  color: var(--red-color);
+  font-weight: 500;
+}
+
+.loginFormSignUpSpan {
+  color: var(--red-color);
+  font-weight: 600;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.loginFormSignupForm {
+  margin: 10px 0;
+  height: 90px;
+}

@@ -12,23 +12,20 @@ const Login = () => {
   const [loginCard, setLoginCard] = useState(false);
   const [signupCard, setSignupCard] = useState(false);
   const token = localStorage.getItem('userId');
+  const newUser = localStorage.getItem('isNewUser');
   const navigate = useNavigate();
 
   useEffect(() => {
     if (token) {
       fetchAuth();
-    } else {
-      navigate('/login');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   const fetchAuth = async () => {
     let res = await authenticateUser();
-    if (res.status === 200) {
+    if (res.status === 200 && !newUser) {
       navigate('/');
-    } else {
-      navigate('/login');
     }
   };
 

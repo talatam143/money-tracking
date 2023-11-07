@@ -1,25 +1,33 @@
-import React from "react";
+import React, { useState } from 'react';
+import { Box, Button } from '@mui/material';
+
+import './Transactions.css';
+import { AddIcon } from '../../Assets/Icons/Icons';
+import TransactionsFilterBar from './TransactionsFilterBar';
+import FormDialog from './FormDialog';
 
 const Transactions = () => {
+  const [dialogState, setDialogState] = useState(false);
+
+  const handleCloseDialog = () => {
+    setDialogState(false);
+  };
+
   return (
-    <div style={{ overflow: "auto" }}>
-      <p>first</p>
-      <h1>Transactions</h1>
-      <h1>Transactions</h1>
-      <h1>Transactions</h1>
-      <h1>Transactions</h1>
-      <h1>Transactions</h1>
-      <h1>Transactions</h1>
-      <h1>Transactions</h1>
-      <h1>Transactions</h1>
-      <h1>Transactions</h1>
-      <h1>Transactions</h1>
-      <h1>Transactions</h1>
-      <h1>Transactions</h1>
-      <h1>Transactions</h1>
-      <h1>Transactions</h1>
-      <p>last</p>
-    </div>
+    <Box className='transactionsContainer'>
+      <TransactionsFilterBar />
+      <FormDialog openState={dialogState} handleCloseDialog={handleCloseDialog} />
+      <Button
+        variant='contained'
+        className='transactionsAddButton'
+        onClick={() => setDialogState(true)}
+      >
+        New Transaction
+        <span className='transactionsAddButtonSpan'>
+          <AddIcon />
+        </span>
+      </Button>
+    </Box>
   );
 };
 

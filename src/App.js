@@ -2,13 +2,14 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { LinearProgress, Snackbar, ThemeProvider, createTheme } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import MuiAlert from '@mui/material/Alert';
-import './App.css';
+
 import Footer from './Components/Footer/Footer';
 import Home from './Components/Home/Home';
 import Transactions from './Components/Transactions/Transactions';
 import Account from './Components/Account/Account';
 import Login from './Components/Login/Login';
 import { resetSnackBar } from './features/SnackBar/SnackBar';
+import NewUser from './Components/Account/NewUser';
 
 const theme = createTheme({
   typography: {
@@ -46,8 +47,11 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/transactions' element={<Transactions />} />
-          <Route path='/account' element={<Account />} />
-          <Route path='/login' element={<Login />} />
+          <Route path='/account'>
+            <Route path='/account' element={<Account />} />
+            <Route path='newpayments' element={<NewUser />} />
+          </Route>
+          <Route path='login' element={<Login />} />
         </Routes>
         <Footer />
       </BrowserRouter>

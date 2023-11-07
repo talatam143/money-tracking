@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { resetLoader, startLoader } from '../../features/ProgressLoader/ProgressLoader';
 import { startSnackbar } from '../../features/SnackBar/SnackBar';
+import { setUserLogin } from '../../features/User/UserSlice';
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const emailErrortext = 'Invalid Email address';
@@ -25,12 +26,11 @@ const LoginForm = (props) => {
     e.preventDefault();
     dispatch(startLoader());
     const response = await signIn(loginData);
-    console.log(response);
     if (response.status === 200) {
       dispatch(startSnackbar({ message: response.data.message, severity: 'success' }));
       dispatch(resetLoader());
+      dispatch(setUserLogin(response.data));
       localStorage.setItem('userId', response.data.token);
-      localStorage.setItem('userName', response.data.name);
       naviagte('/');
     } else {
       dispatch(startSnackbar({ message: response.data.errorMessage, severity: 'error' }));

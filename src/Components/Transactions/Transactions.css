@@ -1,0 +1,97 @@
+.transactionsAddButton {
+  background: var(--red-color) !important;
+  font-size: 18px !important;
+  position: fixed !important;
+  bottom: 65px !important;
+  right: 10px !important;
+  padding: 3px 2.5px 3px 15px !important;
+  border-radius: 12px !important;
+  text-transform: none !important;
+  font-weight: 500 !important;
+}
+
+.transactionsAddButtonSpan {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  border-radius: 12px;
+  height: 38px;
+  width: 38px;
+  background-color: var(--yellow-color);
+  color: var(--darkblue-color);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 4px 1px -2px, rgba(0, 0, 0, 0.3) 0px 3px 3px -3px;
+}
+
+.transactionsFilterContainer {
+  background-color: var(--darkblue-color) !important;
+  padding: 4px !important;
+  height: 40px !important;
+  width: 96% !important;
+  border-radius: 6px !important;
+  margin: 10px auto auto auto !important;
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+}
+
+.transactionSearchButton {
+  background-color: var(--yellow-color) !important;
+  height: 40px !important;
+  width: 40px !important;
+  min-width: auto !important;
+  padding: 0 !important;
+}
+
+.transactionShowInput {
+  width: 100% !important;
+  height: 38px !important;
+  transition: all 0.5s ease-in-out !important;
+  border: none !important;
+  background-color: var(--yellow-color) !important;
+  border-radius: 6px 0px 0px 6px !important;
+}
+.transactionHideInput {
+  width: 0 !important;
+  height: 38px !important;
+  padding: 0 !important;
+  transition: all 0.5s ease-in-out !important;
+  border: none !important;
+  background-color: var(--yellow-color) !important;
+  border-radius: 6px 0px 0px 6px !important;
+}
+
+.transactionShowInput,
+.transactionHideInput:focus {
+  outline: none !important;
+  border: none !important;
+}
+
+.transactionsChildFilterContainer {
+  display: flex !important;
+  align-items: center !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: hidden !important;
+  margin-left: auto !important;
+}
+
+.transactionsHideChildFilterContainer {
+  display: flex !important;
+  align-items: center !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  margin-left: auto !important;
+}
+
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiMenu-paper.MuiPopover-paper.MuiMenu-paper.css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
+  background: var(--lightblue-color) !important;
+}
+
+.MuiList-root,
+.MuiList-padding,
+.MuiMenu-list,
+.MuiList-root-MuiMenu-list {
+  padding: 0 !important;
+}

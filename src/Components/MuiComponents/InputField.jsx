@@ -42,12 +42,14 @@ function StyledTextField(props) {
     error,
     errorText,
     endAdornmentIcon,
+    isSize,
   } = props;
 
   const { type: iconType, handleClick, iconStatus } = endAdornmentIcon || {};
 
   return (
     <ModifiedTextField
+      size={isSize ? 'small' : 'medium'}
       label={label}
       value={value}
       variant={variant}

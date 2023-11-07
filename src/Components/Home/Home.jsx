@@ -1,47 +1,35 @@
+import React, { useState } from 'react';
 import { Box, Button, Menu, MenuItem, Stack, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
 
 import './Home.css';
 
 import userIcon from '../../Assets/Images/userIcon/user_64.png';
-import { authenticateUser } from '../../Services/Auth/Authentication';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserLogout } from '../../features/User/UserSlice';
 
 const menuList = ['Profle', 'My account', 'Logout'];
 
 const Home = () => {
   const [menuState, setMenuState] = useState(null);
-  const token = localStorage.getItem('userId');
-  const userName = localStorage.getItem('userName');
+  const user = useSelector((state) => state.user);
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const open = Boolean(menuState);
+
   const handleMenuClick = (event) => {
     setMenuState(event.currentTarget);
   };
 
   const handleMenuClose = (item) => {
     if (item === 'Logout') {
-      localStorage.clear();
-      navigate('/login');
+      dispatch(setUserLogout());
+    } else if (item === 'My account') {
+      navigate('/account');
     }
+
     setMenuState(null);
-  };
-
-  useEffect(() => {
-    if (token) {
-      fetchAuth();
-    } else {
-      navigate('/login');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token]);
-
-  const fetchAuth = async () => {
-    let res = await authenticateUser();
-    if (res.status === 200) {
-    } else {
-      navigate('/login');
-    }
   };
 
   return (
@@ -61,7 +49,7 @@ const Home = () => {
           color={'#2b3467'}
           className='brandTitleHeading'
         >
-          Hello {userName ? userName.split(' ')[0] : null}
+          Hello {user.name ? user.name.split(' ')[0] : null}
         </Typography>
         <Button
           onClick={handleMenuClick}

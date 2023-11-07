@@ -43,7 +43,6 @@ export const signIn = async (formData) => {
     };
     const response = await fetch(`${serverUrl}auth/login`, requestOptions);
     const data = await response.json();
-    console.log(data);
     return { status: response.status, data: data.data };
   } catch (error) {
     return { status: 404, data: { errorMessage: 'Something went wrong' } };

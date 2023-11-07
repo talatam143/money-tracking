@@ -14,6 +14,7 @@ import './Login.css';
 import { signUp } from '../../Services/Auth/Authentication';
 import { startSnackbar } from '../../features/SnackBar/SnackBar';
 import { useNavigate } from 'react-router-dom';
+import { setUserLogin } from '../../features/User/UserSlice';
 
 const errorText = {
   name: 'Name should contain atleast three words',
@@ -52,7 +53,7 @@ const SignUpForm = (props) => {
   const [errorState, setErrorState] = useState(initialErrorState);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const dispatch = useDispatch();
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
 
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
@@ -68,8 +69,9 @@ const SignUpForm = (props) => {
         dispatch(startSnackbar({ message: response.data.message, severity: 'success' }));
         dispatch(resetLoader());
         localStorage.setItem('userId', response.data.token);
-        localStorage.setItem('userName', response.data.name);
-        naviagte('/');
+        localStorage.setItem('isNewUser', true);
+        dispatch(setUserLogin(response.data));
+        navigate('/account/newpayments');
       } else {
         dispatch(startSnackbar({ message: response.data.errorMessage, severity: 'error' }));
         dispatch(resetLoader());

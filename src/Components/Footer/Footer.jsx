@@ -29,11 +29,13 @@ export default function Footer() {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('userId');
-    if (token) {
-      fetchAuth();
-    } else if (location.pathname !== '/login') {
-      navigate('/login');
+    if (location.pathname !== '/not-found') {
+      const token = localStorage.getItem('userId');
+      if (token) {
+        fetchAuth();
+      } else if (location.pathname !== '/login') {
+        navigate('/login');
+      }
     }
     if (location.pathname === '/') {
       setValue(0);
@@ -44,10 +46,10 @@ export default function Footer() {
     } else {
       setValue(4);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location, navigate]);
 
-  if (location.pathname !== '/login') {
+  if (location.pathname !== '/login' && location.pathname !== '/not-found') {
     return (
       <Box className='mobileMenuContainer'>
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={20}>

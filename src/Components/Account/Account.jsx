@@ -38,55 +38,55 @@ const Account = () => {
         return <SkeletonLoader pageType='ACCOUNT' />;
 
       case statesEnum.SUCCESS:
-        return (
-          <>
-            <Box
-              sx={{
-                width: '100vw',
-                overflowX: 'hidden',
-                height: '90vh',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-              }}
-            >
-              <Box>
-                <UserProfileCard />
-                <UserDetails />
-              </Box>
-              <Button
-                onClick={() => dispatch(setUserLogout())}
-                variant='contained'
-                sx={{
-                  alignSelf: 'center',
-                  width: '95%',
-                  background: '#eb455f',
-                  color: '#fcffe7',
-                  fontWeight: 600,
-                  fontSize: '18px',
-                  '&:active': {
-                    background: '#eb455f',
-                    color: '#fcffe7',
-                  },
-                  '&:hover': {
-                    background: '#eb455f',
-                    opacity: '80%',
-                  },
-                }}
-              >
-                Logout
-              </Button>
-            </Box>
-            <Outlet />
-          </>
-        );
+        return <UserDetails />;
 
       default:
         break;
     }
   };
 
-  return <Page />;
+  return (
+    <>
+      <Box
+        sx={{
+          width: '100vw',
+          overflowX: 'hidden',
+          height: '90vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Box>
+          <UserProfileCard />
+          <Page />
+        </Box>
+        <Button
+          onClick={() => dispatch(setUserLogout())}
+          variant='contained'
+          sx={{
+            alignSelf: 'center',
+            width: '95%',
+            background: '#eb455f',
+            color: '#fcffe7',
+            fontWeight: 600,
+            fontSize: '18px',
+            '&:active': {
+              background: '#eb455f',
+              color: '#fcffe7',
+            },
+            '&:hover': {
+              background: '#eb455f',
+              opacity: '80%',
+            },
+          }}
+        >
+          Logout
+        </Button>
+      </Box>
+      <Outlet />
+    </>
+  );
 };
 
 export default Account;

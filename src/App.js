@@ -10,6 +10,7 @@ import Account from './Components/Account/Account';
 import Login from './Components/Login/Login';
 import { resetSnackBar } from './features/SnackBar/SnackBar';
 import NewUser from './Components/Account/NewUser';
+import NotFound from './Components/Error/NotFound';
 
 const theme = createTheme({
   typography: {
@@ -51,7 +52,8 @@ function App() {
             <Route path='/account' element={<Account />} />
             <Route path='newpayments' element={<NewUser />} />
           </Route>
-          <Route path='login' element={<Login />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/not-found' element={<NotFound />} />
         </Routes>
         <Footer />
       </BrowserRouter>

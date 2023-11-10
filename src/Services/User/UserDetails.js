@@ -25,6 +25,7 @@ export const updatePaymentDetails = async (payload) => {
     const data = await response.json();
     return { status: response.status, data: data.data };
   } catch (error) {
+    window.location.href = '/error';
     return { status: 404, data: { errorMessage: 'Something went wrong' } };
   }
 };
@@ -54,6 +55,7 @@ export const forceUpdateDetails = async (payload) => {
     const data = await response.json();
     return { status: response.status, data };
   } catch (error) {
+    window.location.href = '/error';
     return { status: 404, data: { errorMessage: 'Something went wrong' } };
   }
 };
@@ -70,6 +72,7 @@ export const getUserDetails = async () => {
     const data = await response.json();
     return { status: response.status, data: data };
   } catch (error) {
+    window.location.href = '/error';
     return { status: 404, data: { errorMessage: 'Something went wrong' } };
   }
 };

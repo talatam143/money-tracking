@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
 import { LinearProgress, Snackbar, ThemeProvider, createTheme } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import MuiAlert from '@mui/material/Alert';
@@ -10,6 +10,7 @@ import Account from './Components/Account/Account';
 import Login from './Components/Login/Login';
 import { resetSnackBar } from './features/SnackBar/SnackBar';
 import NewUser from './Components/Account/NewUser';
+import Error from './Components/Error/Error';
 import NotFound from './Components/Error/NotFound';
 
 const theme = createTheme({
@@ -53,7 +54,9 @@ function App() {
             <Route path='newpayments' element={<NewUser />} />
           </Route>
           <Route path='/login' element={<Login />} />
+          <Route path='/error' element={<Error />} />
           <Route path='/not-found' element={<NotFound />} />
+          <Route path='*' element={<Navigate to='/not-found' replace />} />
         </Routes>
         <Footer />
       </BrowserRouter>

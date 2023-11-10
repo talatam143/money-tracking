@@ -1,38 +1,26 @@
-import React from 'react';
-import image404 from '../../Assets/Images/404.png';
 import { Button, Stack, Typography } from '@mui/material';
+import errorImage from '../../Assets/Images/error.png';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const NotFound = () => {
+const Error = () => {
   const naviagte = useNavigate();
 
   return (
-    <Stack flexDirection='column' alignItems='center' sx={{ height: '100vh' }}>
-      <img src={image404} alt='error-logo' width='250px' />
-      <Typography
-        sx={{
-          textAlign: 'center',
-          fontWeight: 600,
-          fontSize: '24px',
-          color: '#2b3467',
-          p: '0 15px',
-        }}
-      >
-        OOPS! PAGE NOT BE FOUND
-      </Typography>
+    <Stack flexDirection='column' alignItems='center' sx={{ height: '100vh', pt: 10 }}>
+      <img src={errorImage} alt='error-logo' width='250px' />
       <Typography
         sx={{
           textAlign: 'center',
           fontWeight: 500,
-          fontSize: '20px',
-          color: '#000000',
+          fontSize: '22px',
+          color: '#2b3467',
           p: '0 15px',
           lineHeight: 1.2,
           mt: 1,
         }}
       >
-        Sorry but the page you are looking for does not exist, have been removed. name changed or is
-        temporarily unavailable
+        We apologize for the inconvenience. It seems that there was an issue on our website.
       </Typography>
       <Button
         variant='contained'
@@ -54,10 +42,10 @@ const NotFound = () => {
         }}
         onClick={() => naviagte('/')}
       >
-        Back to homepage
+        Go Home
       </Button>
     </Stack>
   );
 };
 
-export default NotFound;
+export default Error;

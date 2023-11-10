@@ -14,6 +14,7 @@ export const authenticateUser = async () => {
     payload.data = await response.json();
     return payload;
   } catch (error) {
+    window.location.href = '/error';
     payload.status = 404;
     return payload;
   }
@@ -30,6 +31,7 @@ export const signUp = async (formData) => {
     const data = await response.json();
     return { status: response.status, data: data.data };
   } catch (error) {
+    window.location.href = '/error';
     return { status: 404, data: { errorMessage: 'Something went wrong' } };
   }
 };
@@ -45,6 +47,7 @@ export const signIn = async (formData) => {
     const data = await response.json();
     return { status: response.status, data: data.data };
   } catch (error) {
+    window.location.href = '/error';
     return { status: 404, data: { errorMessage: 'Something went wrong' } };
   }
 };

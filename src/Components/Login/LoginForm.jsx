@@ -15,7 +15,7 @@ const emailErrortext = 'Invalid Email address';
 
 const LoginForm = (props) => {
   const { isChecked, handleSignUp } = props;
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [emailError, setEmailError] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -24,17 +24,21 @@ const LoginForm = (props) => {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    dispatch(startLoader());
-    const response = await signIn(loginData);
-    if (response.status === 200) {
-      dispatch(startSnackbar({ message: response.data.message, severity: 'success' }));
-      dispatch(resetLoader());
-      dispatch(setUserLogin(response.data));
-      localStorage.setItem('userId', response.data.token);
-      naviagte('/');
+    if (emailRegex.test(loginData.email)) {
+      dispatch(startLoader());
+      const response = await signIn(loginData);
+      if (response.status === 200) {
+        dispatch(startSnackbar({ message: response.data.message, severity: 'success' }));
+        dispatch(resetLoader());
+        dispatch(setUserLogin(response.data));
+        localStorage.setItem('userId', response.data.token);
+        naviagte('/');
+      } else {
+        dispatch(startSnackbar({ message: response.data.errorMessage, severity: 'error' }));
+        dispatch(resetLoader());
+      }
     } else {
-      dispatch(startSnackbar({ message: response.data.errorMessage, severity: 'error' }));
-      dispatch(resetLoader());
+      setEmailError(true);
     }
   };
 

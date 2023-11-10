@@ -6,16 +6,16 @@ import { useDispatch } from 'react-redux';
 import FreeSoloAutoCompleteBox from '../MuiComponents/AutoComplete';
 
 import './NewUserStyles.css';
-import { bankData, cardsData, upiData } from '../Constant Data/Data';
 import brandLogo from '../../Assets/Images/transaction_128.png';
 import { updatePaymentDetails } from '../../Services/User/UserDetails';
 import { resetLoader } from '../../features/ProgressLoader/ProgressLoader';
+import { paymentMetaData } from '../Utils/paymentsFormat';
 
-const initialState = {
-  bankDetails: [],
-  creditCardsDetails: [],
-  upiDetails: [],
-};
+const keys = Object.keys(paymentMetaData);
+var initialState = {};
+keys.forEach((eachPayment) => {
+  initialState[eachPayment] = [];
+});
 
 const NewUser = () => {
   const [paymentDetails, setPaymentDetails] = useState(initialState);
@@ -34,9 +34,9 @@ const NewUser = () => {
   const handlePaymentsSubmit = async (e) => {
     e.preventDefault();
     if (
-      paymentDetails.bankDetails.length > 0 ||
-      paymentDetails.creditCardsDetails.length > 0 ||
-      paymentDetails.upiDetails.length > 0
+      paymentDetails[keys[0]].length > 0 ||
+      paymentDetails[keys[1]].length > 0 ||
+      paymentDetails[keys[2]].length > 0
     ) {
       const response = await updatePaymentDetails(paymentDetails);
       if (response.status === 200) {
@@ -71,27 +71,16 @@ const NewUser = () => {
         Add payment details
       </Typography>
       <form className='newPaymentsFormContainer' onSubmit={handlePaymentsSubmit}>
-        <FreeSoloAutoCompleteBox
-          data={bankData}
-          id='bankDetails'
-          label='Select Bank'
-          value={paymentDetails.bankDetails}
-          handleChange={handleChange}
-        />
-        <FreeSoloAutoCompleteBox
-          data={cardsData}
-          id='creditCardsDetails'
-          label='Credit Cards'
-          value={paymentDetails.creditCardsDetails}
-          handleChange={handleChange}
-        />
-        <FreeSoloAutoCompleteBox
-          data={upiData}
-          id='upiDetails'
-          label='Add UPI'
-          value={paymentDetails.upiDetails}
-          handleChange={handleChange}
-        />
+        {keys.map((eachPayment) => (
+          <FreeSoloAutoCompleteBox
+            key={eachPayment}
+            data={paymentMetaData[eachPayment].data}
+            id={eachPayment}
+            label={paymentMetaData[eachPayment].inputLabel}
+            value={paymentDetails[eachPayment]}
+            handleChange={handleChange}
+          />
+        ))}
         <Box className='newPaymentsDetailsButtonsContainer'>
           <Button
             variant='outlined'

@@ -41,7 +41,7 @@ const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[/@.$!%*#?&])[A-Za-z\
 const SignUpForm = (props) => {
   const { isChecked, handleLogin } = props;
   const [formState, setFormState] = useState(isChecked);
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
   const [signupData, setSignUpData] = useState({
     name: '',
     email: '',

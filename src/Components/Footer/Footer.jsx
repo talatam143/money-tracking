@@ -10,6 +10,8 @@ import { authenticateUser } from '../../Services/Auth/Authentication';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserLogin } from '../../features/User/UserSlice';
 
+const noFooterPaths = ['/login', '/not-found', '/error'];
+
 export default function Footer() {
   const [value, setValue] = useState(0);
   const user = useSelector((state) => state.user);
@@ -29,7 +31,7 @@ export default function Footer() {
   };
 
   useEffect(() => {
-    if (location.pathname !== '/not-found') {
+    if (location.pathname !== '/not-found' && location.pathname !== '/error') {
       const token = localStorage.getItem('userId');
       if (token) {
         fetchAuth();
@@ -49,7 +51,7 @@ export default function Footer() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location, navigate]);
 
-  if (location.pathname !== '/login' && location.pathname !== '/not-found') {
+  if (!noFooterPaths.includes(location.pathname)) {
     return (
       <Box className='mobileMenuContainer'>
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={20}>
@@ -62,7 +64,6 @@ export default function Footer() {
           >
             <BottomNavigationAction
               icon={<DashbaordIcon isSelected={location.pathname === '/' ? true : false} />}
-              style={{ color: '#00ff00' }}
               label='Dashboard'
               onClick={() => navigate('/')}
             />

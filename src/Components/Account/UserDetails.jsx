@@ -15,12 +15,12 @@ import MuiAccordin from '../MuiComponents/Accordin';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { CloseIcon } from '../../Assets/Icons/Icons';
 import FreeSoloAutoCompleteBox from '../MuiComponents/AutoComplete';
-import { bankData, cardsData, upiData } from '../Constant Data/Data';
 import { forceUpdateDetails } from '../../Services/User/UserDetails';
 import { setUserData } from '../../features/User/UserData';
 import { startLoader, resetLoader } from '../../features/ProgressLoader/ProgressLoader';
 import { startSnackbar } from '../../features/SnackBar/SnackBar';
 import { formatpaymentInformation } from '../Utils/formatData';
+import { paymentMetaData } from '../Utils/paymentsFormat';
 
 const AddButton = (props) => {
   const { name, type, handleAddData } = props;
@@ -135,83 +135,74 @@ const UserDetails = () => {
         flexWrap='wrap'
         divider={<Divider orientation='vertical' flexItem />}
       >
-        {!Object.keys(localUserData)?.includes('bankDetails') ? (
-          <AddButton name='Add Bank' type='bankDetails' handleAddData={handleAddData} />
-        ) : null}
-        {!Object.keys(localUserData)?.includes('creditCardsDetails') ? (
-          <AddButton
-            name='Add Credit Card'
-            type='creditCardsDetails'
-            handleAddData={handleAddData}
-          />
-        ) : null}
-        {!Object.keys(localUserData)?.includes('upiDetails') ? (
-          <AddButton name='Add UPI' type='upiDetails' handleAddData={handleAddData} />
-        ) : null}
-      </Stack>
-      <Dialog
-        open={handleDialog}
-        fullWidth
-        keepMounted
-        aria-describedby='alert-dialog-slide-description'
-      >
-        <DialogTitle
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            cursor: 'pointer',
-          }}
-          onClick={handleDialogClose}
-        >
-          {dialogType === 'bankDetails'
-            ? 'Add Bank'
-            : dialogType === 'creditCardsDetails'
-            ? 'Add Credit Card'
-            : 'Add UPI'}
-          <CloseIcon />
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id='alert-dialog-slide-userData' sx={{ pt: 1 }}>
-            <FreeSoloAutoCompleteBox
-              data={
-                dialogType === 'bankDetails'
-                  ? bankData
-                  : dialogType === 'creditCardsDetails'
-                  ? cardsData
-                  : upiData
-              }
-              id='bankDetails'
-              label='Select details'
-              value={editedData}
-              handleChange={handleChange}
+        {Object.keys(paymentMetaData)?.map((eachPayment) =>
+          !Object.keys(localUserData).includes(eachPayment) ? (
+            <AddButton
+              key={paymentMetaData[eachPayment].id}
+              name={paymentMetaData[eachPayment].buttonLabel}
+              type={paymentMetaData[eachPayment].id}
+              handleAddData={handleAddData}
             />
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            size='small'
+          ) : null,
+        )}
+      </Stack>
+      {dialogType ? (
+        <Dialog
+          open={handleDialog}
+          fullWidth
+          keepMounted
+          aria-describedby='alert-dialog-slide-description'
+        >
+          <DialogTitle
             sx={{
-              margin: 'auto',
-              background: '#eb455f',
-              color: '#fcffe7',
-              fontWeight: 600,
-              fontSize: '15px',
-              '&:active': {
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              cursor: 'pointer',
+            }}
+          >
+            {paymentMetaData[dialogType].buttonLabel}
+            <button onClick={handleDialogClose} style={{ background: 'none', border: 'none' }}>
+              <CloseIcon />
+            </button>
+          </DialogTitle>
+
+          <DialogContent>
+            <DialogContentText id='alert-dialog-slide-userData' sx={{ pt: 1 }}>
+              <FreeSoloAutoCompleteBox
+                data={paymentMetaData[dialogType].data}
+                id={paymentMetaData[dialogType].id}
+                label={paymentMetaData[dialogType].inputLabel}
+                value={editedData}
+                handleChange={handleChange}
+              />
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              size='small'
+              sx={{
+                margin: 'auto',
                 background: '#eb455f',
                 color: '#fcffe7',
-              },
-              '&:hover': {
-                background: '#eb455f',
-                opacity: '80%',
-              },
-            }}
-            onClick={handleUpdateData}
-          >
-            update
-          </Button>
-        </DialogActions>
-      </Dialog>
+                fontWeight: 600,
+                fontSize: '15px',
+                '&:active': {
+                  background: '#eb455f',
+                  color: '#fcffe7',
+                },
+                '&:hover': {
+                  background: '#eb455f',
+                  opacity: '80%',
+                },
+              }}
+              onClick={handleUpdateData}
+            >
+              update
+            </Button>
+          </DialogActions>
+        </Dialog>
+      ) : null}
     </Box>
   );
 };

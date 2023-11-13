@@ -33,19 +33,19 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      {progressLoader ? <LinearProgress id='loader'/> : null}
+      <Snackbar open={snackBar.snackBarState} autoHideDuration={3000} onClose={handleClose}>
+        <MuiAlert
+          elevation={6}
+          variant='filled'
+          severity={snackBar.snackBarSeverity}
+          onClose={handleClose}
+          sx={{ width: '100%' }}
+        >
+          {snackBar.snackBarText}
+        </MuiAlert>
+      </Snackbar>
       <BrowserRouter>
-        {progressLoader ? <LinearProgress /> : null}
-        <Snackbar open={snackBar.snackBarState} autoHideDuration={3000} onClose={handleClose}>
-          <MuiAlert
-            elevation={6}
-            variant='filled'
-            severity={snackBar.snackBarSeverity}
-            onClose={handleClose}
-            sx={{ width: '100%' }}
-          >
-            {snackBar.snackBarText}
-          </MuiAlert>
-        </Snackbar>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/transactions' element={<Transactions />} />

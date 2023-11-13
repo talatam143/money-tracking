@@ -26,6 +26,8 @@ const Login = () => {
     let res = await authenticateUser();
     if (res.status === 200 && !newUser) {
       navigate('/');
+    } else if (res.status === 200 && newUser) {
+      navigate('/account/newpayments');
     }
   };
 

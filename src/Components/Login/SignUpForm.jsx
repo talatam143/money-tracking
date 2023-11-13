@@ -11,7 +11,7 @@ import { startLoader, resetLoader } from '../../features/ProgressLoader/Progress
 
 import StyledTextField from '../MuiComponents/InputField';
 import './Login.css';
-import { signUp } from '../../Services/Auth/Authentication';
+import { resendOTP, signUp, verifyUser } from '../../Services/Auth/Authentication';
 import { startSnackbar } from '../../features/SnackBar/SnackBar';
 import { useNavigate } from 'react-router-dom';
 import { setUserLogin } from '../../features/User/UserSlice';
@@ -22,6 +22,7 @@ const errorText = {
   mobileNumber: 'Mobile Number must have 10 digits.',
   dateOfBirth: 'You should have atleast 18 Years to create account',
   mpin: 'MPIN must have 4 digits.',
+  OTP: 'OTP must have 6 digits',
   password:
     'Password must have 8+ chars with 1 uppercase, 1 lowercase, 1 digit, and 1 special character.',
 };
@@ -33,6 +34,7 @@ const initialErrorState = {
   dateOfBirth: false,
   password: false,
   mpin: false,
+  OTP: false,
 };
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -42,6 +44,7 @@ const SignUpForm = (props) => {
   const { isChecked, handleLogin } = props;
   const [formState, setFormState] = useState(isChecked);
   const [showPassword, setShowPassword] = useState(true);
+  const [showOTP, setShowOTP] = useState(false);
   const [signupData, setSignUpData] = useState({
     name: '',
     email: '',
@@ -49,6 +52,7 @@ const SignUpForm = (props) => {
     dateOfBirth: dayjs('2022-04-17'),
     mobileNumber: '',
     mpin: '',
+    OTP: '',
   });
   const [errorState, setErrorState] = useState(initialErrorState);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -58,23 +62,22 @@ const SignUpForm = (props) => {
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
 
-    if (signupData.mpin.length !== 4) {
-      setErrorState({ ...errorState, mpin: true });
-    } else if (!passwordRegex.test(signupData.password)) {
-      setErrorState({ ...errorState, password: true });
-    } else {
-      dispatch(startLoader());
-      const response = await signUp(signupData);
-      if (response.status === 200) {
-        dispatch(startSnackbar({ message: response.data.message, severity: 'success' }));
-        dispatch(resetLoader());
-        localStorage.setItem('userId', response.data.token);
-        localStorage.setItem('isNewUser', true);
-        dispatch(setUserLogin(response.data));
-        navigate('/account/newpayments');
+    if (!showOTP) {
+      if (signupData.mpin.length !== 4) {
+        setErrorState({ ...errorState, mpin: true });
+      } else if (!passwordRegex.test(signupData.password)) {
+        setErrorState({ ...errorState, password: true });
       } else {
-        dispatch(startSnackbar({ message: response.data.errorMessage, severity: 'error' }));
-        dispatch(resetLoader());
+        dispatch(startLoader());
+        const response = await signUp(signupData);
+        if (response.status === 200) {
+          setShowOTP(true);
+          dispatch(startSnackbar({ message: response.data.message, severity: 'success' }));
+          dispatch(resetLoader());
+        } else {
+          dispatch(startSnackbar({ message: response.data.errorMessage, severity: 'error' }));
+          dispatch(resetLoader());
+        }
       }
     }
   };
@@ -97,7 +100,7 @@ const SignUpForm = (props) => {
     }
   };
 
-  const handleSignUpFormChange = (e) => {
+  const handleSignUpFormChange = async (e) => {
     const { name, value } = e.target;
 
     const isFieldInvalid = () => {
@@ -116,7 +119,9 @@ const SignUpForm = (props) => {
       if (name === 'password' && !passwordRegex.test(value)) {
         return true;
       }
-
+      if (name === 'OTP' && value.length !== 6) {
+        return true;
+      }
       return false;
     };
 
@@ -129,6 +134,22 @@ const SignUpForm = (props) => {
       ...prevSignUpData,
       [name]: value,
     }));
+
+    if (name === 'OTP' && value.length === 6) {
+      dispatch(startLoader());
+      const response = await verifyUser({ email: signupData.email, otp: value });
+      if (response.status === 200) {
+        dispatch(startSnackbar({ message: response.data.message, severity: 'success' }));
+        dispatch(resetLoader());
+        localStorage.setItem('userId', response.data.token);
+        localStorage.setItem('isNewUser', true);
+        dispatch(setUserLogin(response.data));
+        navigate('/account/newpayments');
+      } else {
+        dispatch(startSnackbar({ message: response.data.errorMessage, severity: 'error' }));
+        dispatch(resetLoader());
+      }
+    }
   };
 
   const handleDateChange = (e) => {
@@ -151,6 +172,18 @@ const SignUpForm = (props) => {
         ...prevErrorData,
         dateOfBirth: false,
       }));
+    }
+  };
+
+  const handleResendOTP = async () => {
+    dispatch(startLoader());
+    const response = await resendOTP({ email: signupData.email });
+    if (response.status === 200) {
+      dispatch(startSnackbar({ message: response.data.message, severity: 'success' }));
+      dispatch(resetLoader());
+    } else {
+      dispatch(startSnackbar({ message: response.data.errorMessage, severity: 'error' }));
+      dispatch(resetLoader());
     }
   };
 
@@ -275,8 +308,12 @@ const SignUpForm = (props) => {
               <Stack direction='column' alignItems='center' textAlign='center' gap={1}>
                 <KeyboardBackspaceSharpIcon
                   fontSize='large'
-                  sx={{ alignSelf: 'flex-start', marginBottom: '10px', fill: '#f96178' }}
-                  onClick={() => setFormState(true)}
+                  sx={{
+                    alignSelf: 'flex-start',
+                    marginBottom: '10px',
+                    fill: !showOTP ? '#2b3467' : '#bad7e9',
+                  }}
+                  onClick={() => (!showOTP ? setFormState(true) : null)}
                 />
                 <StyledTextField
                   name='mpin'
@@ -307,6 +344,29 @@ const SignUpForm = (props) => {
                     iconStatus: showPassword,
                   }}
                 />
+                {showOTP ? (
+                  <>
+                    <StyledTextField
+                      name='OTP'
+                      label='OTP'
+                      value={signupData.OTP}
+                      variant='outlined'
+                      type='number'
+                      isAutoFocus={false}
+                      width={300}
+                      errorText={errorText.OTP}
+                      error={errorState.OTP}
+                      handleInputChange={handleSignUpFormChange}
+                    />
+                    <Typography
+                      mb={1}
+                      sx={{ color: '#f96178', alignSelf: 'flex-start', fontWeight: 500 }}
+                      onClick={handleResendOTP}
+                    >
+                      Resent OTP
+                    </Typography>
+                  </>
+                ) : null}
                 <Button
                   type='submit'
                   variant='contained'
@@ -321,7 +381,7 @@ const SignUpForm = (props) => {
                     },
                   }}
                 >
-                  SIGNUP
+                  {showOTP ? 'SIGNUP' : 'VERIFY'}
                 </Button>
               </Stack>
             </Grow>

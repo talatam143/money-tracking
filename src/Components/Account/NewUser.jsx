@@ -86,7 +86,10 @@ const NewUser = () => {
             variant='outlined'
             color='warning'
             sx={{ width: '49%', fontSize: '16px', fontWeight: '500' }}
-            onClick={() => naviagte('/')}
+            onClick={() => {
+              naviagte('/');
+              localStorage.removeItem('isNewUser');
+            }}
           >
             Skip
           </Button>

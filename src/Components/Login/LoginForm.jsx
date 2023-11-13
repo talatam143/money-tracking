@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Box, Button, Grow, Typography } from '@mui/material';
+import { Box, Button, Grow, Stack, Typography } from '@mui/material';
 
 import './Login.css';
 import StyledTextField from '../MuiComponents/InputField';
-import { signIn } from '../../Services/Auth/Authentication';
+import { resendOTP, signIn, verifyUser } from '../../Services/Auth/Authentication';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { resetLoader, startLoader } from '../../features/ProgressLoader/ProgressLoader';
@@ -12,48 +12,84 @@ import { setUserLogin } from '../../features/User/UserSlice';
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const emailErrortext = 'Invalid Email address';
+const OTPErrorText = 'OTP must have 6 digits';
 
 const LoginForm = (props) => {
   const { isChecked, handleSignUp } = props;
   const [showPassword, setShowPassword] = useState(true);
-  const [loginData, setLoginData] = useState({ email: '', password: '' });
+  const [showOTP, setShowOTP] = useState(false);
+  const [loginData, setLoginData] = useState({ email: '', password: '', OTP: '' });
   const [emailError, setEmailError] = useState(false);
+  const [otpError, setOTPError] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const dispatch = useDispatch();
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    if (emailRegex.test(loginData.email)) {
+    if (!showOTP) {
+      if (emailRegex.test(loginData.email)) {
+        dispatch(startLoader());
+        const response = await signIn(loginData);
+        if (response.status === 200) {
+          dispatch(startSnackbar({ message: response.data.message, severity: 'success' }));
+          dispatch(resetLoader());
+          dispatch(setUserLogin(response.data));
+          localStorage.setItem('userId', response.data.token);
+          navigate('/');
+        } else {
+          if (response.data.isVerified === false) setShowOTP(true);
+          dispatch(startSnackbar({ message: response.data.errorMessage, severity: 'error' }));
+          dispatch(resetLoader());
+        }
+      } else {
+        setEmailError(true);
+      }
+    }
+  };
+
+  const handleLoginChange = async (e) => {
+    const { name, value } = e.target;
+
+    if (name === 'email' && !emailRegex.test(value)) {
+      setEmailError(true);
+    } else {
+      setEmailError(false);
+    }
+    if (name === 'OTP' && value.length !== 6) {
+      setOTPError(true);
+    } else {
+      setOTPError(false);
+    }
+
+    setLoginData((prevLoginData) => ({ ...prevLoginData, [e.target.name]: e.target.value }));
+    if (name === 'OTP' && value.length === 6) {
       dispatch(startLoader());
-      const response = await signIn(loginData);
+      const response = await verifyUser({ email: loginData.email, otp: value });
       if (response.status === 200) {
         dispatch(startSnackbar({ message: response.data.message, severity: 'success' }));
         dispatch(resetLoader());
-        dispatch(setUserLogin(response.data));
         localStorage.setItem('userId', response.data.token);
-        naviagte('/');
+        localStorage.setItem('isNewUser', true);
+        dispatch(setUserLogin(response.data));
+        navigate('/account/newpayments');
       } else {
         dispatch(startSnackbar({ message: response.data.errorMessage, severity: 'error' }));
         dispatch(resetLoader());
       }
-    } else {
-      setEmailError(true);
     }
   };
 
-  const handleLoginChange = (e) => {
-    const { name, value } = e.target;
-
-    const isFieldInvalid = () => {
-      if (name === 'email' && !emailRegex.test(value)) {
-        return true;
-      }
-      return false;
-    };
-
-    setEmailError(isFieldInvalid());
-    setLoginData((prevLoginData) => ({ ...prevLoginData, [e.target.name]: e.target.value }));
+  const handleResendOTP = async () => {
+    dispatch(startLoader());
+    const response = await resendOTP({ email: loginData.email });
+    if (response.status === 200) {
+      dispatch(startSnackbar({ message: response.data.message, severity: 'success' }));
+      dispatch(resetLoader());
+    } else {
+      dispatch(startSnackbar({ message: response.data.errorMessage, severity: 'error' }));
+      dispatch(resetLoader());
+    }
   };
 
   return (
@@ -101,10 +137,38 @@ const LoginForm = (props) => {
               iconStatus: showPassword,
             }}
           />
-          <Box sx={{ textAlign: 'right' }} width={300}>
-            <a href='/login' className='loginFormAnchorTag'>
-              Forgot Password..?
-            </a>
+          <Box width={300} sx={{ textAlign: 'right' }}>
+            {showOTP ? (
+              <>
+                <StyledTextField
+                  name='OTP'
+                  label='OTP'
+                  value={loginData.OTP}
+                  variant='outlined'
+                  type='number'
+                  isAutoFocus={false}
+                  width={300}
+                  errorText={OTPErrorText}
+                  error={otpError}
+                  handleInputChange={handleLoginChange}
+                />
+                <Stack flexDirection='row' justifyContent='space-between' mt={0.5}>
+                  <Typography
+                    sx={{ color: '#f96178', alignSelf: 'flex-start', fontWeight: 500 }}
+                    onClick={handleResendOTP}
+                  >
+                    Resent OTP
+                  </Typography>
+                  <a href='/login' className='loginFormAnchorTag'>
+                    Forgot Password..?
+                  </a>
+                </Stack>
+              </>
+            ) : (
+              <a href='/login' className='loginFormAnchorTag'>
+                Forgot Password..?
+              </a>
+            )}
           </Box>
           <Button
             type='submit'

@@ -1,84 +1,19 @@
-var serverUrl = process.env.REACT_APP_SERVER_URL;
+const serverUrl = `${process.env.REACT_APP_SERVER_URL}auth`;
 
-export const authenticateUser = async () => {
+export const authServiceHandler = async (servicetype, formData, apiPath, apiMethod) => {
   const token = localStorage.getItem('userId');
-  var payload = {};
   try {
     var requestOptions = {
-      method: 'GET',
-      headers: { authorization: `bearer ${token}` },
+      method: apiMethod,
+      headers: { authorization: `bearer ${token}`, 'Content-Type': 'application/json' },
       redirect: 'follow',
     };
-    var response = await fetch(`${serverUrl}auth`, requestOptions);
-    payload.status = response.status;
-    payload.data = await response.json();
-    return payload;
+    if (apiMethod !== 'GET') requestOptions.body = JSON.stringify(formData);
+    var apiResponse = await fetch(`${serverUrl}${apiPath}`, requestOptions);
+    var responseData = await apiResponse.json();
+    return { status: apiResponse.status, data: responseData.data };
   } catch (error) {
-    window.location.href = '/error';
-    localStorage.clear();
-    payload.status = 404;
-    return payload;
-  }
-};
-
-export const signUp = async (formData) => {
-  try {
-    var requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
-    };
-    const response = await fetch(`${serverUrl}auth/signup`, requestOptions);
-    const data = await response.json();
-    return { status: response.status, data: data.data };
-  } catch (error) {
-    window.location.href = '/error';
-    return { status: 404, data: { errorMessage: 'Something went wrong' } };
-  }
-};
-
-export const signIn = async (formData) => {
-  try {
-    var requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
-    };
-    const response = await fetch(`${serverUrl}auth/login`, requestOptions);
-    const data = await response.json();
-    return { status: response.status, data: data.data };
-  } catch (error) {
-    window.location.href = '/error';
-    return { status: 404, data: { errorMessage: 'Something went wrong' } };
-  }
-};
-
-export const verifyUser = async (formData) => {
-  try {
-    var requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
-    };
-    const response = await fetch(`${serverUrl}auth/verifyuser`, requestOptions);
-    const data = await response.json();
-    return { status: response.status, data: data.data };
-  } catch (error) {
-    window.location.href = '/error';
-    return { status: 404, data: { errorMessage: 'Something went wrong' } };
-  }
-};
-export const resendOTP = async (formData) => {
-  try {
-    var requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
-    };
-    const response = await fetch(`${serverUrl}auth/resendotp`, requestOptions);
-    const data = await response.json();
-    return { status: response.status, data: data.data };
-  } catch (error) {
+    if (servicetype === 'authenticateUser') localStorage.clear();
     window.location.href = '/error';
     return { status: 404, data: { errorMessage: 'Something went wrong' } };
   }

@@ -9,25 +9,25 @@
 }
 
 .footerIconsContainer {
-  background-color: var(--yellow-color) !important;
+  background-color: var(--background-color) !important;
   border: solid;
-  border-color: var(--red-color) !important;
+  border-color: var(--primary-color) !important;
   border-width: 1px 0 0 0;
   border-radius: 10px 10px 0 0;
 }
 
 .filledDashboardIcon {
-  fill: var(--red-color) !important;
-  color: var(--red-color) !important;
+  fill: var(--primary-color) !important;
+  color: var(--primary-color) !important;
 }
 
 .filledTransactionIcon {
-  color: var(--red-color) !important;
+  color: var(--primary-color) !important;
 }
 
 .filledAccountIcon {
   fill: none !important;
-  color: var(--red-color) !important;
+  color: var(--primary-color) !important;
 }
 
 .filledDashboardIcon,
@@ -49,6 +49,6 @@
 .MuiBottomNavigationAction-label,
 .Mui-selected,
 .MuiBottomNavigationAction-label {
-  color: var(--red-color) !important;
+  color: var(--primary-color) !important;
   font-weight: bold;
 }

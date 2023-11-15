@@ -3,8 +3,8 @@ import { Box, Button, Grow, Stack, Typography } from '@mui/material';
 
 import './Login.css';
 import StyledTextField from '../MuiComponents/InputField';
-import { resendOTP, signIn, verifyUser } from '../../Services/Auth/Authentication';
-import { useDispatch } from 'react-redux';
+import { authServiceHandler } from '../../Services/Auth/Authentication';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { resetLoader, startLoader } from '../../features/ProgressLoader/ProgressLoader';
 import { startSnackbar } from '../../features/SnackBar/SnackBar';
@@ -24,13 +24,14 @@ const LoginForm = (props) => {
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const appColorTheme = useSelector((state) => state.colorState);
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     if (!showOTP) {
       if (emailRegex.test(loginData.email)) {
         dispatch(startLoader());
-        const response = await signIn(loginData);
+        const response = await authServiceHandler('signIn', loginData, '/login', 'POST');
         if (response.status === 200) {
           dispatch(startSnackbar({ message: response.data.message, severity: 'success' }));
           dispatch(resetLoader());
@@ -65,7 +66,12 @@ const LoginForm = (props) => {
     setLoginData((prevLoginData) => ({ ...prevLoginData, [e.target.name]: e.target.value }));
     if (name === 'OTP' && value.length === 6) {
       dispatch(startLoader());
-      const response = await verifyUser({ email: loginData.email, otp: value });
+      const response = await authServiceHandler(
+        'verifyUser',
+        { email: loginData.email, otp: value },
+        '/verifyuser',
+        'POST',
+      );
       if (response.status === 200) {
         dispatch(startSnackbar({ message: response.data.message, severity: 'success' }));
         dispatch(resetLoader());
@@ -82,7 +88,12 @@ const LoginForm = (props) => {
 
   const handleResendOTP = async () => {
     dispatch(startLoader());
-    const response = await resendOTP({ email: loginData.email });
+    const response = await authServiceHandler(
+      'resendOTP',
+      { email: loginData.email },
+      '/resendotp',
+      'POST',
+    );
     if (response.status === 200) {
       dispatch(startSnackbar({ message: response.data.message, severity: 'success' }));
       dispatch(resetLoader());
@@ -102,7 +113,7 @@ const LoginForm = (props) => {
         sx={{
           border: 'solid',
           borderWidth: '5px 0 0 0',
-          borderColor: '#eb455f',
+          borderColor: appColorTheme.primaryColor,
           borderRadius: '50px 50px 0 0',
         }}
         width='100%'
@@ -154,7 +165,11 @@ const LoginForm = (props) => {
                 />
                 <Stack flexDirection='row' justifyContent='space-between' mt={0.5}>
                   <Typography
-                    sx={{ color: '#f96178', alignSelf: 'flex-start', fontWeight: 500 }}
+                    sx={{
+                      color: appColorTheme.primaryColor,
+                      alignSelf: 'flex-start',
+                      fontWeight: 500,
+                    }}
                     onClick={handleResendOTP}
                   >
                     Resent OTP
@@ -175,19 +190,20 @@ const LoginForm = (props) => {
             variant='contained'
             sx={{
               width: '300px',
-              background: '#eb455f',
-              color: '#fcffe7',
+              background: appColorTheme.primaryColor,
+              color: appColorTheme.backgroundColor,
               fontWeight: 500,
               fontSize: 16,
               '&:hover': {
-                background: '#f96178',
+                background: appColorTheme.primaryColor,
+                opacity: '80%',
               },
             }}
           >
             Login
           </Button>
           <Box width={300}>
-            <Typography fontWeight={500} color='#2b3467' mt={0.5}>
+            <Typography fontWeight={500} color={appColorTheme.secondaryColor} mt={0.5}>
               Don't have account .?{' '}
               <span className='loginFormSignUpSpan' onClick={handleSignUp}>
                 SIGNUP

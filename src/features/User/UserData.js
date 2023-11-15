@@ -20,7 +20,6 @@ export const userDataSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { setUserData, resetUserData } = userDataSlice.actions;
 
 export default userDataSlice.reducer;

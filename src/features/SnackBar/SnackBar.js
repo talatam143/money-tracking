@@ -22,7 +22,6 @@ export const snackbarSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { startSnackbar, resetSnackBar } = snackbarSlice.actions;
 
 export default snackbarSlice.reducer;

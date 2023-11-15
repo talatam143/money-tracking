@@ -6,12 +6,12 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import KeyboardBackspaceSharpIcon from '@mui/icons-material/KeyboardBackspaceSharp';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { startLoader, resetLoader } from '../../features/ProgressLoader/ProgressLoader';
 
 import StyledTextField from '../MuiComponents/InputField';
 import './Login.css';
-import { resendOTP, signUp, verifyUser } from '../../Services/Auth/Authentication';
+import { authServiceHandler } from '../../Services/Auth/Authentication';
 import { startSnackbar } from '../../features/SnackBar/SnackBar';
 import { useNavigate } from 'react-router-dom';
 import { setUserLogin } from '../../features/User/UserSlice';
@@ -58,6 +58,7 @@ const SignUpForm = (props) => {
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const appColorTheme = useSelector((state) => state.colorState);
 
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
@@ -69,7 +70,7 @@ const SignUpForm = (props) => {
         setErrorState({ ...errorState, password: true });
       } else {
         dispatch(startLoader());
-        const response = await signUp(signupData);
+        const response = await authServiceHandler('signUp', signupData, '/signup', 'POST');
         if (response.status === 200) {
           setShowOTP(true);
           dispatch(startSnackbar({ message: response.data.message, severity: 'success' }));
@@ -137,7 +138,12 @@ const SignUpForm = (props) => {
 
     if (name === 'OTP' && value.length === 6) {
       dispatch(startLoader());
-      const response = await verifyUser({ email: signupData.email, otp: value });
+      const response = await authServiceHandler(
+        'verifyUser',
+        { email: signupData.email, otp: value },
+        '/verifyuser',
+        'POST',
+      );
       if (response.status === 200) {
         dispatch(startSnackbar({ message: response.data.message, severity: 'success' }));
         dispatch(resetLoader());
@@ -177,7 +183,12 @@ const SignUpForm = (props) => {
 
   const handleResendOTP = async () => {
     dispatch(startLoader());
-    const response = await resendOTP({ email: signupData.email });
+    const response = await authServiceHandler(
+      'resendOTP',
+      { email: signupData.email },
+      '/resendotp',
+      'POST',
+    );
     if (response.status === 200) {
       dispatch(startSnackbar({ message: response.data.message, severity: 'success' }));
       dispatch(resetLoader());
@@ -197,7 +208,7 @@ const SignUpForm = (props) => {
         sx={{
           border: 'solid',
           borderWidth: '5px 0 0 0',
-          borderColor: '#eb455f',
+          borderColor: appColorTheme.primaryColor,
           borderRadius: '50px 50px 0 0',
         }}
         width='100%'
@@ -254,22 +265,28 @@ const SignUpForm = (props) => {
                     }}
                     min
                     sx={{
+                      '& .MuiInputBase-input.MuiOutlinedInput-input ': {
+                        color: appColorTheme.name === 'Dark theme' ? '#FFFFFF ' : null,
+                      },
+                      '& .MuiButtonBase-root.MuiIconButton-root ': {
+                        color: appColorTheme.name === 'Dark theme' ? '#FFFFFF ' : null,
+                      },
                       '& .MuiInputLabel-root': {
-                        color: '#2b3467',
+                        color: appColorTheme.secondaryColor,
                         fontWeight: 500,
                         fontSize: 18,
                       },
                       '& .MuiInputLabel-root.Mui-focused': {
-                        color: '#2b3467', // Label color when focused (black)
+                        color: appColorTheme.secondaryColor,
                       },
                       '& .MuiOutlinedInput-root': {
                         '& fieldset': {
-                          borderColor: '#2b3467 !important',
+                          borderColor: appColorTheme.secondaryColor,
                           borderWidth: 1,
                         },
                       },
                       '& .MuiOutlinedInput-root:hover fieldset': {
-                        borderColor: '#2b3467 !important',
+                        borderColor: appColorTheme.secondaryColor,
                       },
                       '& input[type=number]::-webkit-inner-spin-button, & input[type=number]::-webkit-outer-spin-button':
                         {
@@ -287,12 +304,12 @@ const SignUpForm = (props) => {
                 variant='contained'
                 sx={{
                   width: '300px',
-                  background: '#eb455f',
-                  color: '#fcffe7',
+                  background: appColorTheme.primaryColor,
+                  color: appColorTheme.backgroundColor,
                   fontWeight: 500,
                   fontSize: 16,
                   '&:hover': {
-                    background: '#f96178',
+                    background: appColorTheme.primaryColor,
                   },
                 }}
               >
@@ -311,7 +328,7 @@ const SignUpForm = (props) => {
                   sx={{
                     alignSelf: 'flex-start',
                     marginBottom: '10px',
-                    fill: !showOTP ? '#2b3467' : '#bad7e9',
+                    fill: !showOTP ? appColorTheme.secondaryColor : appColorTheme.lightColor,
                   }}
                   onClick={() => (!showOTP ? setFormState(true) : null)}
                 />
@@ -360,7 +377,11 @@ const SignUpForm = (props) => {
                     />
                     <Typography
                       mb={1}
-                      sx={{ color: '#f96178', alignSelf: 'flex-start', fontWeight: 500 }}
+                      sx={{
+                        color: appColorTheme.primaryColor,
+                        alignSelf: 'flex-start',
+                        fontWeight: 500,
+                      }}
                       onClick={handleResendOTP}
                     >
                       Resent OTP
@@ -372,12 +393,13 @@ const SignUpForm = (props) => {
                   variant='contained'
                   sx={{
                     width: '300px',
-                    background: '#eb455f',
-                    color: '#fcffe7',
+                    background: appColorTheme.primaryColor,
+                    color: appColorTheme.backgroundColor,
                     fontWeight: 500,
                     fontSize: 16,
                     '&:hover': {
-                      background: '#f96178',
+                      background: appColorTheme.primaryColor,
+                      oppacity: '80%',
                     },
                   }}
                 >
@@ -387,7 +409,7 @@ const SignUpForm = (props) => {
             </Grow>
           )}
           <Box width={300}>
-            <Typography fontWeight={500} color='#2b3467'>
+            <Typography fontWeight={500} color={appColorTheme.secondaryColor}>
               Already have account .?{' '}
               <span className='loginFormSignUpSpan' onClick={handleLogin}>
                 Login

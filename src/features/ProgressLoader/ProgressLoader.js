@@ -17,7 +17,6 @@ export const progressLoaderSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { startLoader, resetLoader } = progressLoaderSlice.actions;
 
 export default progressLoaderSlice.reducer;

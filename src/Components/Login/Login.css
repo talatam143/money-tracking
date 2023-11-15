@@ -5,8 +5,8 @@
 }
 
 .loginCardButtons {
-  background-color: var(--red-color) !important;
-  color: var(--yellow-color) !important;
+  background-color: var(--primary-color) !important;
+  color: var(--background-color) !important;
   width: 80px !important;
   font-size: 18px !important;
   font-weight: 600 !important;
@@ -28,12 +28,12 @@
 
 .loginFormAnchorTag {
   text-decoration: none;
-  color: var(--red-color);
+  color: var(--primary-color);
   font-weight: 500;
 }
 
 .loginFormSignUpSpan {
-  color: var(--red-color);
+  color: var(--primary-color);
   font-weight: 600;
   font-size: 17px;
   cursor: pointer;

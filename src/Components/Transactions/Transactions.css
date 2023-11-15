@@ -1,5 +1,5 @@
 .transactionsAddButton {
-  background: var(--red-color) !important;
+  background: var(--primary-color) !important;
   font-size: 18px !important;
   position: fixed !important;
   bottom: 65px !important;
@@ -18,13 +18,13 @@
   border-radius: 12px;
   height: 38px;
   width: 38px;
-  background-color: var(--yellow-color);
-  color: var(--darkblue-color);
+  background-color: var(--background-color);
+  color: var(--secondary-color);
   box-shadow: rgba(50, 50, 93, 0.25) 0px 4px 1px -2px, rgba(0, 0, 0, 0.3) 0px 3px 3px -3px;
 }
 
 .transactionsFilterContainer {
-  background-color: var(--darkblue-color) !important;
+  background-color: var(--secondary-color) !important;
   padding: 4px !important;
   height: 40px !important;
   width: 96% !important;
@@ -36,7 +36,7 @@
 }
 
 .transactionSearchButton {
-  background-color: var(--yellow-color) !important;
+  background-color: var(--background-color) !important;
   height: 40px !important;
   width: 40px !important;
   min-width: auto !important;
@@ -48,7 +48,7 @@
   height: 38px !important;
   transition: all 0.5s ease-in-out !important;
   border: none !important;
-  background-color: var(--yellow-color) !important;
+  background-color: var(--background-color) !important;
   border-radius: 6px 0px 0px 6px !important;
 }
 .transactionHideInput {
@@ -57,7 +57,7 @@
   padding: 0 !important;
   transition: all 0.5s ease-in-out !important;
   border: none !important;
-  background-color: var(--yellow-color) !important;
+  background-color: var(--background-color) !important;
   border-radius: 6px 0px 0px 6px !important;
 }
 
@@ -86,7 +86,7 @@
 }
 
 .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiMenu-paper.MuiPopover-paper.MuiMenu-paper.css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
-  background: var(--lightblue-color) !important;
+  background: var(--light-color) !important;
 }
 
 .MuiList-root,

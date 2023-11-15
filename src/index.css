@@ -1,25 +1,77 @@
-:root {
-  --yellow-color: #fcffe7;
-  --red-color: #eb455f;
-  --darkblue-color: #2b3467;
-  --lightblue-color: #bad7e9;
+.defaultTheme {
+  --background-color: #fcffe7;
+  --primary-color: #eb455f;
+  --secondary-color: #2b3467;
+  --light-color: #bad7e9;
+}
+
+.secondaryTheme {
+  --background-color: #f5f5f5;
+  --primary-color: #fc5185;
+  --secondary-color: #364f6b;
+  --light-color: #3fc1c9;
+}
+
+.darkTheme {
+  --background-color: #111936;
+  --primary-color: #1565c0;
+  --secondary-color: #6200ea;
+  --light-color: #d1c4e9;
+}
+
+.blueTheme {
+  --background-color: #f7fbfc;
+  --primary-color: #0f4c75;
+  --secondary-color: #1b262c;
+  --light-color: #3282b8;
+}
+
+.greenTheme {
+  --background-color: #feffde;
+  --primary-color: #52734d;
+  --secondary-color: #40513b;
+  --light-color: #ddffbc;
+}
+
+.greyTheme {
+  --background-color: #faf3e0;
+  --primary-color: #6c3428;
+  --secondary-color: #1e212d;
+  --light-color: #eabf9f;
 }
 
 body {
   font-family: 'Tajawal', sans-serif !important;
-  background-color: var(--yellow-color) !important;
+  background-color: var(--background-color) !important;
   margin: 0;
 }
 
+.mobileMenuContainer .MuiPaper-root {
+  background-color: transparent !important;
+}
+
+.MuiDialog-paper {
+  background-color: var(--background-color) !important;
+}
+
+.MuiDialogTitle-root {
+  color: var(--primary-color) !important;
+}
+
+.MuiAccordion-root:first-of-type {
+  border-radius: 10px !important;
+  background-color: transparent !important;
+}
+
 .MuiPickersLayout-root {
-  background: var(--lightblue-color) !important;
-  color: var(--red-color) !important;
+  background: var(--light-color) !important;
+  color: var(--primary-color) !important;
   border-radius: 10px !important;
 }
 
 .css-as40ez-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
-  color: var(--yellow-color) !important;
-  background-color: var(--red-color) !important;
+  color: var(--background-color) !important;
+  background-color: var(--primary-color) !important;
 }
 
 .MuiPopper-root-MuiPickersPopper-root {
@@ -36,11 +88,11 @@ body {
 }
 
 .MuiLinearProgress-root {
-  background-color: var(--lightblue-color) !important;
+  background-color: var(--light-color) !important;
 }
 
 .MuiLinearProgress-bar {
-  background-color: var(--darkblue-color) !important;
+  background-color: var(--secondary-color) !important;
 }
 
 .MuiPaper-root-MuiAlert-root {
@@ -54,13 +106,13 @@ body {
 
 .MuiAutocomplete-listbox {
   border-radius: 10px !important;
-  color: var(--darkblue-color) !important;
+  color: var(--secondary-color) !important;
   font-weight: 500 !important;
   font-size: 18px !important;
 }
 
 .MuiAutocomplete-listbox :hover {
-  background: var(--lightblue-color) !important;
+  background: var(--light-color) !important;
   border-radius: 6px !important;
 }
 
@@ -79,7 +131,7 @@ body {
 }
 
 .MuiChip-deleteIcon {
-  fill: var(--red-color) !important;
+  fill: var(--primary-color) !important;
 }
 
 #loader {

@@ -1,33 +1,7 @@
 import React from 'react';
 import { IconButton, InputAdornment, TextField } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-
-const ModifiedTextField = styled(TextField)(() => ({
-  '& .MuiInputLabel-root': {
-    color: '#2b3467',
-    fontWeight: 500,
-    fontSize: 18,
-  },
-  '& .MuiInputLabel-root.Mui-focused': {
-    color: '#2b3467', // Label color when focused (black)
-  },
-  '& .MuiOutlinedInput-root': {
-    '& fieldset': {
-      borderColor: '#2b3467 !important',
-      borderWidth: 1,
-    },
-  },
-  '& .MuiOutlinedInput-root:hover fieldset': {
-    borderColor: '#2b3467 !important',
-  },
-  '& input[type=number]::-webkit-inner-spin-button, & input[type=number]::-webkit-outer-spin-button':
-    {
-      WebkitAppearance: 'none',
-      appearance: 'none',
-      margin: 0,
-    },
-}));
+import { useSelector } from 'react-redux';
 
 function StyledTextField(props) {
   const {
@@ -46,9 +20,10 @@ function StyledTextField(props) {
   } = props;
 
   const { type: iconType, handleClick, iconStatus } = endAdornmentIcon || {};
+  const appColorTheme = useSelector((state) => state.colorState);
 
   return (
-    <ModifiedTextField
+    <TextField
       size={isSize ? 'small' : 'medium'}
       label={label}
       value={value}
@@ -56,19 +31,54 @@ function StyledTextField(props) {
       name={name}
       type={endAdornmentIcon ? (iconStatus ? type : 'text') : type}
       autoFocus={isAutoFocus}
-      sx={{ width: { width } }}
       onChange={handleInputChange}
       error={error ? true : false}
       helperText={error ? errorText : null}
       InputProps={{
+        style: { color: appColorTheme.name === 'Dark theme' ? '#FFFFFF' : null },
         endAdornment:
           iconType === 'password' ? (
             <InputAdornment position='end'>
               <IconButton aria-label='toggle password visibility' onClick={handleClick} edge='end'>
-                {iconStatus ? <Visibility /> : <VisibilityOff />}
+                {iconStatus ? (
+                  <Visibility
+                    sx={{ fill: appColorTheme.name === 'Dark theme' ? '#FFFFFF' : null }}
+                  />
+                ) : (
+                  <VisibilityOff
+                    sx={{ fill: appColorTheme.name === 'Dark theme' ? '#FFFFFF' : null }}
+                  />
+                )}
               </IconButton>
             </InputAdornment>
           ) : null,
+      }}
+      sx={{
+        width: { width },
+        '& .MuiInputLabel-root': {
+          color: appColorTheme.secondaryColor,
+          fontWeight: 500,
+          fontSize: 18,
+        },
+        '& .MuiInputLabel-root.Mui-focused': {
+          color: appColorTheme.secondaryColor,
+        },
+        '& .MuiOutlinedInput-root': {
+          '& fieldset': {
+            borderColor: `${appColorTheme.secondaryColor} !important`,
+            borderWidth: 1,
+          },
+        },
+        '& .MuiOutlinedInput-root:hover fieldset': {
+          borderColor: `${appColorTheme.secondaryColor} !important`,
+        },
+        '& input[type=number]::-webkit-inner-spin-button, & input[type=number]::-webkit-outer-spin-button':
+          {
+            WebkitAppearance: 'none',
+            appearance: 'none',
+            margin: 0,
+          },
+        color: 'red',
       }}
     />
   );

@@ -2,12 +2,12 @@ import { Box, Button, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { startSnackbar } from '../../features/SnackBar/SnackBar';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import FreeSoloAutoCompleteBox from '../MuiComponents/AutoComplete';
 
 import './NewUserStyles.css';
 import brandLogo from '../../Assets/Images/transaction_128.png';
-import { updatePaymentDetails } from '../../Services/User/UserDetails';
+import { userPaymentDataHandler } from '../../Services/User/PaymentData';
 import { resetLoader } from '../../features/ProgressLoader/ProgressLoader';
 import { paymentMetaData } from '../Utils/paymentsFormat';
 
@@ -19,6 +19,7 @@ keys.forEach((eachPayment) => {
 
 const NewUser = () => {
   const [paymentDetails, setPaymentDetails] = useState(initialState);
+  const appColorTheme = useSelector((state) => state.colorState);
   const naviagte = useNavigate();
   const dispatch = useDispatch();
   const token = localStorage.getItem('userId');
@@ -38,7 +39,12 @@ const NewUser = () => {
       paymentDetails[keys[1]].length > 0 ||
       paymentDetails[keys[2]].length > 0
     ) {
-      const response = await updatePaymentDetails(paymentDetails);
+      const response = await userPaymentDataHandler(
+        'updatePaymentDetails',
+        paymentDetails,
+        '/updatealldetails',
+        'PUT',
+      );
       if (response.status === 200) {
         dispatch(startSnackbar({ message: response.data.message, severity: 'success' }));
         dispatch(resetLoader());
@@ -67,7 +73,7 @@ const NewUser = () => {
   return (
     <Box className='newPaymentsDetailsContainer'>
       <img src={brandLogo} alt='brand-logo' className='loginFormSignupForm' />
-      <Typography sx={{ fontSize: '22px', fontWeight: '600', color: '#eb455f' }}>
+      <Typography sx={{ fontSize: '22px', fontWeight: '600', color: appColorTheme.primaryColor }}>
         Add payment details
       </Typography>
       <form className='newPaymentsFormContainer' onSubmit={handlePaymentsSubmit}>

@@ -7,7 +7,7 @@ import { setUserLogout } from '../../features/User/UserSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSuccessState, statesEnum } from '../../features/PageState/PageState';
 import SkeletonLoader from '../Loader/Skeleton';
-import { getUserDetails } from '../../Services/User/UserDetails';
+import { userPaymentDataHandler } from '../../Services/User/PaymentData';
 import { setUserData } from '../../features/User/UserData';
 import { formatpaymentInformation } from '../Utils/formatData';
 
@@ -15,6 +15,7 @@ const Account = () => {
   const dispatch = useDispatch();
   const pageState = useSelector((state) => state.pageState);
   const userData = useSelector((state) => state.userData);
+  const appColorTheme = useSelector((state) => state.colorState);
 
   useEffect(() => {
     if (!userData.isUserDatafetced) {
@@ -24,9 +25,9 @@ const Account = () => {
   }, [userData]);
 
   const fetchUserDetails = async () => {
-    const apiData = await getUserDetails();
-    if (apiData.status === 200) {
-      var data = formatpaymentInformation(apiData.data);
+    const response = await userPaymentDataHandler('getUserDetails', {}, '/getuserdetails', 'GET');
+    if (response.status === 200) {
+      var data = formatpaymentInformation(response.data);
       dispatch(setUserData(data));
       dispatch(setSuccessState());
     }
@@ -67,16 +68,16 @@ const Account = () => {
           sx={{
             alignSelf: 'center',
             width: '95%',
-            background: '#eb455f',
-            color: '#fcffe7',
+            background: appColorTheme.primaryColor,
+            color: appColorTheme.backgroundColor,
             fontWeight: 600,
             fontSize: '18px',
             '&:active': {
-              background: '#eb455f',
-              color: '#fcffe7',
+              background: appColorTheme.primaryColor,
+              color: appColorTheme.backgroundColor,
             },
             '&:hover': {
-              background: '#eb455f',
+              background: appColorTheme.primaryColor,
               opacity: '80%',
             },
           }}

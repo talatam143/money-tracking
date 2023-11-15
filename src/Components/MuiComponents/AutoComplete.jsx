@@ -1,42 +1,16 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import styled from '@emotion/styled';
 import { Chip } from '@mui/material';
-
-const ModifiedTextField = styled(TextField)(() => ({
-  '& .MuiInputLabel-root': {
-    color: '#2b3467',
-    fontWeight: 500,
-    fontSize: 18,
-  },
-  '& .MuiInputLabel-root.Mui-focused': {
-    color: '#2b3467', // Label color when focused (black)
-  },
-  '& .MuiOutlinedInput-root': {
-    '& fieldset': {
-      borderColor: '#2b3467 !important',
-      borderWidth: 1,
-    },
-  },
-  '& .MuiOutlinedInput-root:hover fieldset': {
-    borderColor: '#2b3467 !important',
-  },
-  '& input[type=number]::-webkit-inner-spin-button, & input[type=number]::-webkit-outer-spin-button':
-    {
-      WebkitAppearance: 'none',
-      appearance: 'none',
-      margin: 0,
-    },
-}));
+import { useSelector } from 'react-redux';
 
 const handleSubmit = (event) => {
-  // This handles form submission and can capture the Enter key press on mobile devices
   event.preventDefault();
 };
 
 const FreeSoloAutoCompleteBox = (props) => {
   const { data, label, id, value, handleChange } = props;
+  const appColorTheme = useSelector((state) => state.colorState);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -54,7 +28,7 @@ const FreeSoloAutoCompleteBox = (props) => {
               label={option}
               {...getTagProps({ index })}
               sx={{
-                background: '#2b3467',
+                background: appColorTheme.secondaryColor,
                 color: '#FFFFFF',
                 fontSize: '16px',
                 fontWeight: '400',
@@ -63,7 +37,7 @@ const FreeSoloAutoCompleteBox = (props) => {
           ))
         }
         renderInput={(params) => (
-          <ModifiedTextField
+          <TextField
             {...params}
             label={label}
             placeholder='Type/Search & Enter'
@@ -74,6 +48,37 @@ const FreeSoloAutoCompleteBox = (props) => {
               if (isEnterKey) {
                 event.preventDefault();
               }
+            }}
+            sx={{
+              '& .MuiAutocomplete-clearIndicator': {
+                color: { color: appColorTheme.name === 'Dark theme' ? '#FFFFFF' : null },
+              },
+              '& .MuiOutlinedInput-root.MuiInputBase-sizeSmall': {
+                color: { color: appColorTheme.name === 'Dark theme' ? '#FFFFFF' : null },
+              },
+              '& .MuiInputLabel-root': {
+                color: appColorTheme.secondaryColor,
+                fontWeight: 500,
+                fontSize: 18,
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: appColorTheme.secondaryColor,
+              },
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: `${appColorTheme.secondaryColor} !important`,
+                  borderWidth: 1,
+                },
+              },
+              '& .MuiOutlinedInput-root:hover fieldset': {
+                borderColor: `${appColorTheme.secondaryColor} !important`,
+              },
+              '& input[type=number]::-webkit-inner-spin-button, & input[type=number]::-webkit-outer-spin-button':
+                {
+                  WebkitAppearance: 'none',
+                  appearance: 'none',
+                  margin: 0,
+                },
             }}
           />
         )}

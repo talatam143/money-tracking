@@ -3,11 +3,13 @@ import { Box, Button, FormControl, MenuItem, Select } from '@mui/material';
 
 import './Transactions.css';
 import { CloseIcon, DownDirection, SearchIcon } from '../../Assets/Icons/Icons';
+import { useSelector } from 'react-redux';
 
 const TransactionsFilterBar = () => {
   const [searchBar, setSearchBar] = useState(false);
   const [searchInput, setSearchInput] = useState('');
   const [sortOption, setSortOption] = React.useState('');
+  const appColorTheme = useSelector((state) => state.colorState);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -56,8 +58,8 @@ const TransactionsFilterBar = () => {
             displayEmpty
             inputProps={{ 'aria-label': 'Without label' }}
             sx={{
-              background: '#fcffe7',
-              color: '#2b3467',
+              background: appColorTheme.backgroundColor,
+              color: appColorTheme.secondaryColor,
               fontWeight: 600,
               height: '40px',
               width: '190px',

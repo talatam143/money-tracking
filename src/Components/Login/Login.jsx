@@ -6,7 +6,8 @@ import brandLogo from '../../Assets/Images/transaction_128.png';
 import './Login.css';
 import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
-import { authenticateUser } from '../../Services/Auth/Authentication';
+import { authServiceHandler } from '../../Services/Auth/Authentication';
+import { useSelector } from 'react-redux';
 
 const Login = () => {
   const [loginCard, setLoginCard] = useState(false);
@@ -14,6 +15,7 @@ const Login = () => {
   const token = localStorage.getItem('userId');
   const newUser = localStorage.getItem('isNewUser');
   const navigate = useNavigate();
+  const appColorTheme = useSelector((state) => state.colorState);
 
   useEffect(() => {
     if (token) {
@@ -23,7 +25,7 @@ const Login = () => {
   }, [token]);
 
   const fetchAuth = async () => {
-    let res = await authenticateUser();
+    let res = await authServiceHandler('authenticateUser', {}, '', 'GET');
     if (res.status === 200 && !newUser) {
       navigate('/');
     } else if (res.status === 200 && newUser) {
@@ -52,7 +54,7 @@ const Login = () => {
     >
       <img src={brandLogo} alt='brand-logo' className={signupCard ? 'loginFormSignupForm' : null} />
       {!signupCard ? (
-        <Box borderRadius={2} p={1} sx={{ fontSize: '25px', color: '#2b3467' }}>
+        <Box borderRadius={2} p={1} sx={{ fontSize: '25px', color: appColorTheme.secondaryColor }}>
           <Typography variant='h5' className='loginCardHeadings'>
             Making Money Management a Breeze - Dive In Now to Start Saving!
           </Typography>

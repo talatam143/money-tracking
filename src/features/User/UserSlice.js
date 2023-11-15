@@ -18,17 +18,13 @@ export const userSlice = createSlice({
       state.mobileNumber = payload.payload.mobileNumber;
     },
     setUserLogout: (state) => {
-      state.isUserLoggedIn = false;
-      state.email = '';
-      state.name = '';
-      state.mobileNumber = '';
-      localStorage.clear();
-      window.location.reload();
+      localStorage.removeItem('userId');
+      window.location.href = '/';
+      state = initialState;
     },
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { setUserLogin, setUserLogout } = userSlice.actions;
 
 export default userSlice.reducer;

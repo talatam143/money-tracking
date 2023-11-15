@@ -1,14 +1,22 @@
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+
 export const DashbaordIcon = (props) => {
   let classString = props.isSelected
     ? 'icon icon-tabler icon-tabler-layout-dashboard filledDashboardIcon'
     : 'icon icon-tabler icon-tabler-layout-dashboard outlinedDashboardIcon';
+  const appColorTheme = useSelector((state) => state.colorState);
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
       className={classString}
       viewBox='0 0 24 24'
       strokeWidth='2'
-      stroke='currentColor'
+      stroke={
+        appColorTheme.name === 'Dark theme' && !props.isSelected
+          ? appColorTheme.lightColor
+          : 'currentColor'
+      }
       fill='none'
       strokeLinecap='round'
       strokeLinejoin='round'
@@ -26,13 +34,26 @@ export const TransactionsIcon = (props) => {
   let classString = props.isSelected
     ? 'icon icon-tabler icon-tabler-clipboard-text filledTransactionIcon'
     : 'icon icon-tabler icon-tabler-clipboard-text outlinedTransactionIcon';
+  const appColorTheme = useSelector((state) => state.colorState);
+  const [strokeColor, setStrokeColor] = useState('currentColor');
+
+  useEffect(() => {
+    if (props.isSelected) {
+      setStrokeColor(appColorTheme.backgroundColor);
+    } else if (appColorTheme.name === 'Dark theme') {
+      setStrokeColor(appColorTheme.lightColor);
+    } else if (appColorTheme.name !== 'Dark theme') {
+      setStrokeColor('currentColor');
+    }
+  }, [appColorTheme, props.isSelected]);
+
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
       className={classString}
       viewBox='0 0 24 24'
       strokeWidth='2'
-      stroke='currentColor'
+      stroke={appColorTheme.name === 'Dark theme' && !props.isSelected ? '#d1c4e9' : 'currentColor'}
       fill='none'
       strokeLinecap='round'
       strokeLinejoin='round'
@@ -41,14 +62,14 @@ export const TransactionsIcon = (props) => {
       <path
         d='M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2'
         fill={props.isSelected ? 'currentColor' : 'none'}
-        stroke={props.isSelected ? 'none' : 'currentColor'}
+        stroke={props.isSelected ? 'none' : strokeColor}
       ></path>
       <path
         d='M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z'
-        fill={props.isSelected ? '#fcffe7' : 'none'}
+        fill={props.isSelected ? appColorTheme.backgroundColor : 'none'}
       ></path>
-      <path d='M9 12h6' stroke={props.isSelected ? '#fcffe7' : 'currentColor'}></path>
-      <path d='M9 16h6' stroke={props.isSelected ? '#fcffe7' : 'currentColor'}></path>
+      <path d='M9 12h6' stroke={strokeColor}></path>
+      <path d='M9 16h6' stroke={strokeColor}></path>
     </svg>
   );
 };
@@ -57,13 +78,18 @@ export const UserAccountIcon = (props) => {
   let classString = props.isSelected
     ? 'icon icon-tabler icon-tabler-user-square-rounded filledAccountIcon'
     : 'icon icon-tabler icon-tabler-user-square-rounded outlinedAccountIcon';
+  const appColorTheme = useSelector((state) => state.colorState);
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
       className={classString}
       viewBox='0 0 24 24'
       strokeWidth='2'
-      stroke='currentColor'
+      stroke={
+        appColorTheme.name === 'Dark theme' && !props.isSelected
+          ? appColorTheme.lightColor
+          : 'currentColor'
+      }
       fill='none'
       strokeLinecap='round'
       strokeLinejoin='round'
@@ -83,6 +109,7 @@ export const UserAccountIcon = (props) => {
 };
 
 export const AddIcon = () => {
+  const appColorTheme = useSelector((state) => state.colorState);
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -92,7 +119,7 @@ export const AddIcon = () => {
       viewBox='0 0 24 24'
       strokeWidth='2.5'
       stroke='currentColor'
-      fill='#2b3467'
+      fill={appColorTheme.secondaryColor}
       strokeLinecap='round'
       strokeLinejoin='round'
     >
@@ -104,6 +131,7 @@ export const AddIcon = () => {
 };
 
 export const SearchIcon = () => {
+  const appColorTheme = useSelector((state) => state.colorState);
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -112,7 +140,7 @@ export const SearchIcon = () => {
       height='22'
       viewBox='0 0 24 24'
       strokeWidth='2.5'
-      stroke='#2b3467'
+      stroke={appColorTheme.secondaryColor}
       fill='none'
       strokeLinecap='round'
       strokeLinejoin='round'
@@ -125,6 +153,7 @@ export const SearchIcon = () => {
 };
 
 export const DownDirection = () => {
+  const appColorTheme = useSelector((state) => state.colorState);
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -133,7 +162,7 @@ export const DownDirection = () => {
       height='26'
       viewBox='0 0 24 24'
       strokeWidth='2'
-      stroke='#2b3467'
+      stroke={appColorTheme.secondaryColor}
       fill='none'
       strokeLinecap='round'
       strokeLinejoin='round'
@@ -153,6 +182,7 @@ export const DownDirection = () => {
 };
 
 export const CloseIcon = () => {
+  const appColorTheme = useSelector((state) => state.colorState);
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -161,7 +191,7 @@ export const CloseIcon = () => {
       height='24'
       viewBox='0 0 24 24'
       strokeWidth='2.2'
-      stroke='#2b3467'
+      stroke={appColorTheme.secondaryColor}
       fill='none'
       strokeLinecap='round'
       strokeLinejoin='round'
@@ -174,6 +204,7 @@ export const CloseIcon = () => {
 };
 
 export const UserName = () => {
+  const appColorTheme = useSelector((state) => state.colorState);
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -182,7 +213,7 @@ export const UserName = () => {
       height='28'
       viewBox='0 0 24 24'
       strokeWidth='1.5'
-      stroke='#bad7e9'
+      stroke={appColorTheme.lightColor}
       fill='none'
       strokeLinecap='round'
       strokeLinejoin='round'
@@ -190,8 +221,8 @@ export const UserName = () => {
       <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
       <path
         d='M3 4m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z'
-        fill='#2b3467'
-        stroke='#2b3467'
+        fill={appColorTheme.secondaryColor}
+        stroke={appColorTheme.secondaryColor}
       ></path>
       <path d='M9 10m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0'></path>
       <path d='M15 8l2 0'></path>
@@ -255,6 +286,7 @@ export const UserPhone = () => {
 };
 
 export const UserCardAcountIcon = (props) => {
+  const appColorTheme = useSelector((state) => state.colorState);
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -269,8 +301,8 @@ export const UserCardAcountIcon = (props) => {
       strokeLinejoin='round'
     >
       <path stroke='none' d='M0 0h24v24H0z' fill='none' />
-      <path d='M8 10a3 3 0 1 0 6 0a3 3 0 0 0 -6 0' fill='#2b3467' />
-      <path d='M5 21v-1a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v1' fill='#2b3467' />
+      <path d='M8 10a3 3 0 1 0 6 0a3 3 0 0 0 -6 0' fill={appColorTheme.secondaryColor} />
+      <path d='M5 21v-1a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v1' fill={appColorTheme.secondaryColor} />
       <path d='M3 5a2 2 0 0 1 1 -2h13a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-14z' />
     </svg>
   );
@@ -346,6 +378,7 @@ export const PayPalIcon = () => {
 };
 
 export const EditButton = () => {
+  const appColorTheme = useSelector((state) => state.colorState);
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -354,7 +387,7 @@ export const EditButton = () => {
       height='22'
       viewBox='0 0 24 22'
       strokeWidth='1.8'
-      stroke='#2b3467'
+      stroke={appColorTheme.secondaryColor}
       fill='none'
       strokeLinecap='round'
       strokeLinejoin='round'

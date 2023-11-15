@@ -1,3 +1,37 @@
 .brandTitleHeading {
-  font-family: "Courgette", cursive !important;
+  font-family: 'Courgette', cursive !important;
+}
+
+.changeThemeLabel {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 6px 0;
+  color: var(--secondary-color);
+  font-size: 17px;
+  font-weight: 500;
+  width: 230px;
+  box-sizing: border-box;
+  border-radius: 6px;
+}
+
+.themeColorContainer {
+  width: 150px;
+  height: 40px;
+  display: flex;
+  border: solid 2px #000000;
+  border-radius: 4px;
+}
+
+.themeColorSubContainer {
+  flex: 1;
+}
+
+.themeColorNamePara {
+  padding: 0;
+  margin: 0;
+  font-weight: 600;
+  text-align: 'center';
 }

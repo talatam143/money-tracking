@@ -1,9 +1,11 @@
-import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Paper } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { BankIcon, CreditCardIcon, EditButton, PayPalIcon } from '../../Assets/Icons/Icons';
+import { useSelector } from 'react-redux';
 
 const MuiAccordin = (props) => {
   const { category, accordinState, handleAccordinChange, handleAccordinEdit, data } = props;
+  const appColorTheme = useSelector((state) => state.colorState);
 
   return (
     <Accordion
@@ -12,7 +14,14 @@ const MuiAccordin = (props) => {
       onChange={handleAccordinChange(category)}
     >
       <AccordionSummary
-        expandIcon={<ExpandMoreIcon sx={{ fontSize: '30px' }} />}
+        expandIcon={
+          <ExpandMoreIcon
+            sx={{
+              fontSize: '30px',
+              fill: appColorTheme.name === 'Dark theme' ? '#FFFFFF' : null,
+            }}
+          />
+        }
         aria-controls={category}
         id={category}
         sx={{ height: '7px' }}
@@ -45,7 +54,9 @@ const MuiAccordin = (props) => {
       <AccordionDetails sx={{ padding: 0 }}>
         <div className='accordinCardsContainer'>
           {data?.map((eadhData) => (
-            <div
+            <Paper
+              elevation={2}
+              sx={{ borderRadius: '15px', background: appColorTheme.backgroundColor }}
               key={eadhData.name}
               className={
                 category === 'bankDetails' || category === 'creditCardsDetails'
@@ -66,7 +77,7 @@ const MuiAccordin = (props) => {
                 }}
               />
               <p className='accordingCardName'>{eadhData.name}</p>
-            </div>
+            </Paper>
           ))}
         </div>
       </AccordionDetails>

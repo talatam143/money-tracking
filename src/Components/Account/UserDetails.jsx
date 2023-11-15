@@ -15,7 +15,7 @@ import MuiAccordin from '../MuiComponents/Accordin';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { CloseIcon } from '../../Assets/Icons/Icons';
 import FreeSoloAutoCompleteBox from '../MuiComponents/AutoComplete';
-import { forceUpdateDetails } from '../../Services/User/UserDetails';
+import { userPaymentDataHandler } from '../../Services/User/PaymentData';
 import { setUserData } from '../../features/User/UserData';
 import { startLoader, resetLoader } from '../../features/ProgressLoader/ProgressLoader';
 import { startSnackbar } from '../../features/SnackBar/SnackBar';
@@ -24,21 +24,22 @@ import { paymentMetaData } from '../Utils/paymentsFormat';
 
 const AddButton = (props) => {
   const { name, type, handleAddData } = props;
+  const appColorTheme = useSelector((state) => state.colorState);
   return (
     <Button
       variant='contained'
       sx={{
         display: 'flex',
         alignItems: 'center',
-        background: '#2b3467',
-        color: '#fcffe7',
+        background: appColorTheme.secondaryColor,
+        color: appColorTheme.backgroundColor,
         flexGrow: 1,
         borderRadius: '8px',
         '&:active': {
-          background: '#2b3467',
+          background: appColorTheme.secondaryColor,
         },
         '&:hover': {
-          background: '#2b3467',
+          background: appColorTheme.secondaryColor,
           opacity: '90%',
         },
       }}
@@ -57,6 +58,7 @@ const UserDetails = () => {
   const [editedData, setEditedData] = useState([]);
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userData);
+  const appColorTheme = useSelector((state) => state.colorState);
 
   useEffect(() => {
     setLocalUserData(userData.userData);
@@ -91,17 +93,21 @@ const UserDetails = () => {
 
   const handleUpdateData = async () => {
     dispatch(startLoader());
-    const response = await forceUpdateDetails({ [dialogType]: editedData });
+    const response = await userPaymentDataHandler(
+      'forceUpdateDetails',
+      { [dialogType]: editedData },
+      '/forceupdate',
+      'PUT',
+    );
     if (response.status === 200) {
       dispatch(resetLoader());
-      var data = formatpaymentInformation(response.data.data.data);
-      dispatch(startSnackbar({ message: response.data.data.message, severity: 'success' }));
+      var data = formatpaymentInformation(response.data);
+      dispatch(startSnackbar({ message: response.data.message, severity: 'success' }));
       dispatch(setUserData(data));
       setEditedData([]);
       handleDialogClose();
     } else {
-      console.log(response);
-      dispatch(startSnackbar({ message: response.data.data.errorMessage, severity: 'error' }));
+      dispatch(startSnackbar({ message: response.data.errorMessage, severity: 'error' }));
       dispatch(resetLoader());
     }
   };
@@ -111,7 +117,7 @@ const UserDetails = () => {
       {Object.keys(localUserData)?.map?.((eachItem) => (
         <Box
           sx={{
-            border: 'solid 2px #eb455f',
+            border: `solid 2px ${appColorTheme.primaryColor}`,
             borderRadius: '15px',
             mb: 2,
           }}
@@ -162,7 +168,10 @@ const UserDetails = () => {
             }}
           >
             {paymentMetaData[dialogType].buttonLabel}
-            <button onClick={handleDialogClose} style={{ background: 'none', border: 'none' }}>
+            <button
+              onClick={handleDialogClose}
+              style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+            >
               <CloseIcon />
             </button>
           </DialogTitle>
@@ -183,16 +192,16 @@ const UserDetails = () => {
               size='small'
               sx={{
                 margin: 'auto',
-                background: '#eb455f',
-                color: '#fcffe7',
+                background: appColorTheme.primaryColor,
+                color: appColorTheme.backgroundColor,
                 fontWeight: 600,
                 fontSize: '15px',
                 '&:active': {
-                  background: '#eb455f',
-                  color: '#fcffe7',
+                  background: appColorTheme.primaryColor,
+                  color: appColorTheme.backgroundColor,
                 },
                 '&:hover': {
-                  background: '#eb455f',
+                  background: appColorTheme.primaryColor,
                   opacity: '80%',
                 },
               }}

@@ -2,9 +2,11 @@ import React from 'react';
 import image404 from '../../Assets/Images/404.png';
 import { Button, Stack, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const NotFound = () => {
   const naviagte = useNavigate();
+  const appColorTheme = useSelector((state) => state.colorState);
 
   return (
     <Stack flexDirection='column' alignItems='center' sx={{ height: '100vh' }}>
@@ -14,7 +16,7 @@ const NotFound = () => {
           textAlign: 'center',
           fontWeight: 600,
           fontSize: '24px',
-          color: '#2b3467',
+          color: appColorTheme.secondaryColor,
           p: '0 15px',
         }}
       >
@@ -38,17 +40,17 @@ const NotFound = () => {
         variant='contained'
         sx={{
           alignSelf: 'center',
-          background: '#2b3467',
-          color: '#fcffe7',
+          background: appColorTheme.secondaryColor,
+          color: appColorTheme.backgroundColor,
           fontWeight: 500,
           fontSize: '16px',
           mt: 3,
           '&:active': {
-            background: '#2b3467',
-            color: '#fcffe7',
+            background: appColorTheme.secondaryColor,
+            color: appColorTheme.backgroundColor,
           },
           '&:hover': {
-            background: '#2b3467',
+            background: appColorTheme.secondaryColor,
             opacity: '80%',
           },
         }}

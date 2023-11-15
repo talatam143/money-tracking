@@ -57,8 +57,7 @@ const FormDialog = (props) => {
     ({ theme }) => `
     width: 97.8%;
     border-radius: 4px;
-    color: "#2b3467;
-    border: 1px solid red;
+    color: "#2b3467";
     padding:1%;
   `,
   );

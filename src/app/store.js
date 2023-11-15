@@ -4,6 +4,7 @@ import snackBarReducer from '../features/SnackBar/SnackBar';
 import userReducer from '../features/User/UserSlice';
 import userDataReducer from '../features/User/UserData';
 import pageStateReducer from '../features/PageState/PageState';
+import colorStateReducer from '../features/ColoeTheme/ColorTheme';
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
     user: userReducer,
     userData: userDataReducer,
     pageState: pageStateReducer,
+    colorState: colorStateReducer,
   },
 });

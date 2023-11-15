@@ -26,7 +26,6 @@ export const pageState = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { setSuccessState, setErrorState, resetState } = pageState.actions;
 
 export default pageState.reducer;

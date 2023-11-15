@@ -6,11 +6,11 @@ import { Box } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { DashbaordIcon, TransactionsIcon, UserAccountIcon } from '../../Assets/Icons/Icons';
 import './FooterStyles.css';
-import { authenticateUser } from '../../Services/Auth/Authentication';
+import { authServiceHandler } from '../../Services/Auth/Authentication';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserLogin } from '../../features/User/UserSlice';
 
-const noFooterPaths = ['/login', '/not-found', '/error'];
+const noFooterPaths = ['/login', '/not-found', '/error', '/pin'];
 
 export default function Footer() {
   const [value, setValue] = useState(0);
@@ -21,9 +21,9 @@ export default function Footer() {
 
   const fetchAuth = async () => {
     if (user.isUserLoggedIn === false) {
-      let res = await authenticateUser();
+      let res = await authServiceHandler('authenticateUser', {}, '', 'GET');
       if (res.status === 200) {
-        dispatch(setUserLogin(res.data.data));
+        dispatch(setUserLogin(res.data));
       } else {
         navigate('/login');
       }

@@ -17,6 +17,8 @@ function StyledTextField(props) {
     errorText,
     endAdornmentIcon,
     isSize,
+    multiline,
+    rows,
   } = props;
 
   const { type: iconType, handleClick, iconStatus } = endAdornmentIcon || {};
@@ -28,6 +30,8 @@ function StyledTextField(props) {
       label={label}
       value={value}
       variant={variant}
+      multiline={multiline ? true : false}
+      rows={multiline ? rows : null}
       name={name}
       type={endAdornmentIcon ? (iconStatus ? type : 'text') : type}
       autoFocus={isAutoFocus}
@@ -71,6 +75,12 @@ function StyledTextField(props) {
         },
         '& .MuiOutlinedInput-root:hover fieldset': {
           borderColor: `${appColorTheme.secondaryColor} !important`,
+        },
+        '& .MuiInputBase-root.MuiInput-root ': {
+          borderBottom: `1px solid ${appColorTheme.secondaryColor}`,
+        },
+        '& .MuiInputBase-root.MuiInput-root:after ': {
+          borderBottom: `2px solid ${appColorTheme.secondaryColor}`,
         },
         '& input[type=number]::-webkit-inner-spin-button, & input[type=number]::-webkit-outer-spin-button':
           {

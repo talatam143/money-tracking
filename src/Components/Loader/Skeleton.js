@@ -18,8 +18,17 @@ const SkeletonLoader = (props) => {
       case 'HOME':
         break;
       case 'TRANSACTIONS':
-        break;
-
+        return (
+          <Stack sx={{ width: '100%', mt: 1 }} gap={2} alignItems='center'>
+            <Skeleton variant='rounded' width='95%' height={55} animation='wave' />
+            <Skeleton variant='rounded' width='95%' height={55} />
+            <Skeleton variant='rounded' width='95%' height={55} animation='wave' />
+            <Skeleton variant='rounded' width='95%' height={55} />
+            <Skeleton variant='rounded' width='95%' height={55} animation='wave' />
+            <Skeleton variant='rounded' width='95%' height={55} />
+            <Skeleton variant='rounded' width='95%' height={55} animation='wave' />
+          </Stack>
+        );
       default:
         break;
     }

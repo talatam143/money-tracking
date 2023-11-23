@@ -2,32 +2,32 @@ import { useEffect, useState } from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Paper from '@mui/material/Paper';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { DashbaordIcon, TransactionsIcon, UserAccountIcon } from '../../Assets/Icons/Icons';
+import {
+  AddIcon,
+  DashbaordIcon,
+  TransactionsIcon,
+  UserAccountIcon,
+} from '../../Assets/Icons/Icons';
 import './FooterStyles.css';
 import { authServiceHandler } from '../../Services/Auth/Authentication';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserLogin } from '../../features/User/UserSlice';
+import TransactionForm from '../Transactions/TransactionForm';
 
 const noFooterPaths = ['/login', '/not-found', '/error', '/pin'];
 
 export default function Footer() {
+  const [showTransactionForm, setShowTransactionForm] = useState(false);
   const [value, setValue] = useState(0);
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const fetchAuth = async () => {
-    if (user.isUserLoggedIn === false) {
-      let res = await authServiceHandler('authenticateUser', {}, '', 'GET');
-      if (res.status === 200) {
-        dispatch(setUserLogin(res.data));
-      } else {
-        navigate('/login');
-      }
-    }
+  const handleCloseTransactionForm = () => {
+    setShowTransactionForm(false);
   };
 
   useEffect(() => {
@@ -51,9 +51,36 @@ export default function Footer() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location, navigate]);
 
+  const fetchAuth = async () => {
+    if (user.isUserLoggedIn === false) {
+      let res = await authServiceHandler('authenticateUser', {}, '', 'GET');
+      if (res.status === 200) {
+        dispatch(setUserLogin(res.data));
+      } else {
+        navigate('/login');
+      }
+    }
+  };
+
   if (!noFooterPaths.includes(location.pathname)) {
     return (
       <Box className='mobileMenuContainer'>
+        <TransactionForm
+          openState={showTransactionForm}
+          handleCloseDialog={handleCloseTransactionForm}
+        />
+        {location.pathname !== '/account' ? (
+          <Button
+            variant='contained'
+            className='transactionsAddButton'
+            onClick={() => setShowTransactionForm(true)}
+          >
+            New Transaction
+            <span className='transactionsAddButtonSpan'>
+              <AddIcon />
+            </span>
+          </Button>
+        ) : null}
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={20}>
           <BottomNavigation
             value={value}

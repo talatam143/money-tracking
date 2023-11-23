@@ -131,7 +131,7 @@ body {
 }
 
 .MuiChip-deleteIcon {
-  fill: var(--primary-color) !important;
+  fill: var(--light-color) !important;
 }
 
 #loader {
@@ -141,3 +141,27 @@ body {
   width: 100% !important;
   z-index: 1000 !important;
 }
+
+.MuiStack-root > .MuiTextField-root {
+  min-width: unset !important;
+}
+
+.categoryPara {
+  padding: 0;
+  margin: 0;
+}
+
+.MuiChip-label {
+  margin-top: 0px !important;
+}
+
+@media (width<600px) {
+  .categoryPara {
+    margin: 6px 0 0 0;
+  }
+  .MuiChip-label {
+    margin-top: 5px !important;
+  }
+}
+
+

@@ -30,6 +30,49 @@ import TMB from '../../Assets/Images/bank logos/TMB.svg';
 import UCOBank from '../../Assets/Images/bank logos/UCO Bank.svg';
 import UnionBank from '../../Assets/Images/bank logos/Union Bank.svg';
 import VijayaBank from '../../Assets/Images/bank logos/Vijaya Bank.svg';
+import {
+  IconDeviceGamepad2,
+  IconMovie,
+  IconMusic,
+  IconInfinity,
+  IconShirtSport,
+  IconToolsKitchen2,
+  IconMilk,
+  IconGlassFull,
+  IconPlug,
+  IconSofa,
+  IconHomeStar,
+  IconHammer,
+  IconBuildingBank,
+  IconCat,
+  IconCash,
+  IconHotelService,
+  IconMoodKid,
+  IconJacket,
+  IconSchool,
+  IconGift,
+  IconCarCrash,
+  IconMedicineSyrup,
+  IconReceiptTax,
+  IconBike,
+  IconTrain,
+  IconCarSuv,
+  IconGasStation,
+  IconBuildingSkyscraper,
+  IconParking,
+  IconPlane,
+  IconAerialLift,
+  IconActivityHeartbeat,
+  IconVacuumCleaner,
+  IconSunElectricity,
+  IconCampfire,
+  IconTrash,
+  IconDeviceTvOld,
+  IconBottle,
+  IconCreditCard,
+  IconWorldWww,
+  IconCircleLetterU,
+} from '@tabler/icons-react';
 
 export const bankData = [
   {
@@ -393,3 +436,289 @@ export const upiData = [
       'https://play-lh.googleusercontent.com/Hc8vNA4SOZwg5HMnBiwJLMT3tLYll54D994uZG7GeJYBtMEa2zHk8hNywTJZqpwWTg=w240-h480-rw',
   },
 ];
+
+const mediumSize = 43;
+const smallSize = 35;
+
+export const transactionCategories = {
+  Entertainment: [
+    {
+      name: 'Games',
+      icon: <IconDeviceGamepad2 />,
+      mediumIcon: <IconDeviceGamepad2 size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconDeviceGamepad2 size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Movies',
+      icon: <IconMovie />,
+      mediumIcon: <IconMovie size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconMovie size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Music',
+      icon: <IconMusic />,
+      mediumIcon: <IconMusic size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconMusic size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Other',
+      icon: <IconInfinity />,
+      mediumIcon: <IconInfinity size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconInfinity size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Sports',
+      icon: <IconShirtSport />,
+      mediumIcon: <IconShirtSport size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconShirtSport size={smallSize} stroke={1} />,
+    },
+  ],
+  'Food and drink': [
+    {
+      name: 'Dining out',
+      icon: <IconToolsKitchen2 />,
+      mediumIcon: <IconToolsKitchen2 size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconToolsKitchen2 size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Groceries',
+      icon: <IconMilk />,
+      mediumIcon: <IconMilk size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconMilk size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Liquor',
+      icon: <IconGlassFull />,
+      mediumIcon: <IconGlassFull size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconGlassFull size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Other',
+      icon: <IconInfinity />,
+      mediumIcon: <IconInfinity size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconInfinity size={smallSize} stroke={1} />,
+    },
+  ],
+  Home: [
+    {
+      name: 'Electronics',
+      icon: <IconPlug />,
+      mediumIcon: <IconPlug size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconPlug size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Furniture',
+      icon: <IconSofa />,
+      mediumIcon: <IconSofa size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconSofa size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Household supplies',
+      icon: <IconHomeStar />,
+      mediumIcon: <IconHomeStar size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconHomeStar size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Maintenance',
+      icon: <IconHammer />,
+      mediumIcon: <IconHammer size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconHammer size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Mortgage',
+      icon: <IconBuildingBank />,
+      mediumIcon: <IconBuildingBank size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconBuildingBank size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Other',
+      icon: <IconInfinity />,
+      mediumIcon: <IconInfinity size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconInfinity size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Pets',
+      icon: <IconCat />,
+      mediumIcon: <IconCat size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconCat size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Rent',
+      icon: <IconCash />,
+      mediumIcon: <IconCash size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconCash size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Services',
+      icon: <IconHotelService />,
+      mediumIcon: <IconHotelService size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconHotelService size={smallSize} stroke={1} />,
+    },
+  ],
+  Life: [
+    {
+      name: 'Childcare',
+      icon: <IconMoodKid />,
+      mediumIcon: <IconMoodKid size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconMoodKid size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Clothing',
+      icon: <IconJacket />,
+      mediumIcon: <IconJacket size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconJacket size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Education',
+      icon: <IconSchool />,
+      mediumIcon: <IconSchool size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconSchool size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Gifts',
+      icon: <IconGift />,
+      mediumIcon: <IconGift size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconGift size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Insurance',
+      icon: <IconCarCrash />,
+      mediumIcon: <IconCarCrash size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconCarCrash size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Medical expenses',
+      icon: <IconMedicineSyrup />,
+      mediumIcon: <IconMedicineSyrup size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconMedicineSyrup size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Other',
+      icon: <IconInfinity />,
+      mediumIcon: <IconInfinity size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconInfinity size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Taxes',
+      icon: <IconReceiptTax />,
+      mediumIcon: <IconReceiptTax size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconReceiptTax size={smallSize} stroke={1} />,
+    },
+  ],
+  Transportation: [
+    {
+      name: 'Bicycle',
+      icon: <IconBike />,
+      mediumIcon: <IconBike size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconBike size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Bus/train',
+      icon: <IconTrain />,
+      mediumIcon: <IconTrain size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconTrain size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Car',
+      icon: <IconCarSuv />,
+      mediumIcon: <IconCarSuv size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconCarSuv size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Gas/fuel',
+      icon: <IconGasStation />,
+      mediumIcon: <IconGasStation size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconGasStation size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Hotel',
+      icon: <IconBuildingSkyscraper />,
+      mediumIcon: <IconBuildingSkyscraper size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconBuildingSkyscraper size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Other',
+      icon: <IconInfinity />,
+      mediumIcon: <IconInfinity size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconInfinity size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Parking',
+      icon: <IconParking />,
+      mediumIcon: <IconParking size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconParking size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Plane',
+      icon: <IconPlane />,
+      mediumIcon: <IconPlane size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconPlane size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Taxi',
+      icon: <IconAerialLift />,
+      mediumIcon: <IconAerialLift size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconAerialLift size={smallSize} stroke={1} />,
+    },
+  ],
+  Uncategorized: [
+    {
+      name: 'General',
+      icon: <IconActivityHeartbeat />,
+      mediumIcon: <IconActivityHeartbeat size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconActivityHeartbeat size={smallSize} stroke={1} />,
+    },
+  ],
+  Utilities: [
+    {
+      name: 'Cleaning',
+      icon: <IconVacuumCleaner />,
+      mediumIcon: <IconVacuumCleaner size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconVacuumCleaner size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Electricity',
+      icon: <IconSunElectricity />,
+      mediumIcon: <IconSunElectricity size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconSunElectricity size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Heat/gas',
+      icon: <IconCampfire />,
+      mediumIcon: <IconCampfire size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconCampfire size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Other',
+      icon: <IconInfinity />,
+      mediumIcon: <IconInfinity size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconInfinity size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Trash',
+      icon: <IconTrash />,
+      mediumIcon: <IconTrash size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconTrash size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'TV/Phone/Internet',
+      icon: <IconDeviceTvOld />,
+      mediumIcon: <IconDeviceTvOld size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconDeviceTvOld size={smallSize} stroke={1} />,
+    },
+    {
+      name: 'Water',
+      icon: <IconBottle />,
+      mediumIcon: <IconBottle size={mediumSize} stroke={1.4} />,
+      smallIcon: <IconActivityHeartbeat size={smallSize} stroke={1} />,
+    },
+  ],
+};
+
+export const paymentMethod = {
+  UPI: { icon: <IconCircleLetterU stroke={1.6} /> },
+  'Credit Card': { icon: <IconCreditCard stroke={1.6} /> },
+  'Debit Card': { icon: <IconCreditCard stroke={1.6} /> },
+  'Intenet Baning': { icon: <IconWorldWww stroke={1.6} /> },
+  Cash: { icon: <IconCash stroke={1.6} /> },
+};

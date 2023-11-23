@@ -5,10 +5,13 @@ import './Transactions.css';
 import { CloseIcon, DownDirection, SearchIcon } from '../../Assets/Icons/Icons';
 import { useSelector } from 'react-redux';
 
-const TransactionsFilterBar = () => {
+const Options = ['Compact', 'Normal'];
+
+const TransactionsFilterBar = (props) => {
+  const { viewOptions, handleSortChange } = props;
   const [searchBar, setSearchBar] = useState(false);
   const [searchInput, setSearchInput] = useState('');
-  const [sortOption, setSortOption] = React.useState('');
+
   const appColorTheme = useSelector((state) => state.colorState);
   const inputRef = useRef(null);
 
@@ -17,10 +20,6 @@ const TransactionsFilterBar = () => {
       inputRef.current.focus();
     }
   }, [searchBar]);
-
-  const handleSortChange = (event) => {
-    setSortOption(event.target.value);
-  };
 
   const handleSearchButton = (e) => {
     if (searchBar) {
@@ -53,7 +52,7 @@ const TransactionsFilterBar = () => {
       >
         <FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
           <Select
-            value={sortOption}
+            value={viewOptions}
             onChange={handleSortChange}
             displayEmpty
             inputProps={{ 'aria-label': 'Without label' }}
@@ -62,17 +61,17 @@ const TransactionsFilterBar = () => {
               color: appColorTheme.secondaryColor,
               fontWeight: 600,
               height: '40px',
-              width: '190px',
+              width: '120px',
             }}
           >
             <MenuItem value=''>
-              <em>Sort Options</em>
+              <em>none</em>
             </MenuItem>
-            <MenuItem value='Latest tarnsactions'>Latest tarnsactions</MenuItem>
-            <MenuItem value='Old transactions'>Old transactions</MenuItem>
-            <MenuItem value='High to Low'>High to Low</MenuItem>
-            <MenuItem value='Low to High'>Low to High</MenuItem>
-            <MenuItem value='Starred'>Starred</MenuItem>
+            {Options.map((eacOption) => (
+              <MenuItem value={eacOption} key={eacOption}>
+                {eacOption}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
 

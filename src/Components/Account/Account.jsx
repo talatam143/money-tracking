@@ -20,6 +20,8 @@ const Account = () => {
   useEffect(() => {
     if (!userData.isUserDatafetced) {
       fetchUserDetails();
+    } else {
+      dispatch(setSuccessState());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);

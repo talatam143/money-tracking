@@ -95,3 +95,75 @@
 .MuiList-root-MuiMenu-list {
   padding: 0 !important;
 }
+
+/* The switch - the box around the slider */
+.switch {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 3.5em;
+  height: 2em;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(182, 182, 182);
+  transition: 0.4s;
+  border-radius: 8px;
+}
+
+.slider:before {
+  position: absolute;
+  content: '';
+  height: 1.4em;
+  width: 1.4em;
+  border-radius: 6px;
+  left: 0.3em;
+  bottom: 0.3em;
+  transform: rotate(180deg);
+  background-color: rgb(255, 255, 255);
+  transition: 0.4s;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-star-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 3l18 18" /><path  d="M10.012 6.016l1.981 -4.014l3.086 6.253l6.9 1l-4.421 4.304m.012 4.01l.588 3.426l-6.158 -3.245l-6.172 3.245l1.179 -6.873l-5 -4.867l6.327 -.917" /></svg>') !important;
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.switch input:checked + .slider {
+  background-color: #ffe700;
+}
+
+.switch input:checked + .slider:before {
+  background-color: #000000 !important;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-star" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="gold" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>') !important;
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(1.5em);
+}
+
+.normalViewEditButton {
+  border: solid 2px var(--secondary-color);
+  background-color: transparent;
+  color: var(--secondary-color);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25px;
+  width: 35px;
+  cursor: pointer;
+}
